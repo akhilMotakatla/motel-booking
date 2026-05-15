@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const authController = require(newFunction());
+
+
+const { registerUser, loginUser, registerAdmin, loginAdmin } = require('../controllers/authController');
 
 // User routes
-router.post('/register/user', authController.registerUser);
-router.post('/login/user', authController.loginUser);
+router.post('/user/register', registerUser);
+router.post('/user/login', loginUser);
 
 // Admin routes
-router.post('/register/admin', authController.registerAdmin);
-router.post('/login/admin', authController.loginAdmin);
+router.post('/admin/register', registerAdmin);
+router.post('/admin/login', loginAdmin);
 
 module.exports = router;
-function newFunction() {
-  return '../controllers/authController';
-}
-

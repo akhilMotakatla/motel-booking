@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/LoginRegister.css';
+import '../styles/Admin.css';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -31,8 +31,9 @@ const AdminLogin = () => {
 
   return (
     <div className="login-container">
-      <h2>Admin Login</h2>
+     
       <form onSubmit={handleLogin}>
+         <h2>Admin Login</h2>
         <input
           type="email"
           placeholder="Admin Email"

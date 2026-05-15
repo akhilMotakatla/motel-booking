@@ -1,0 +1,29 @@
+# Dependencies
+**/node_modules/
+
+# .NET build output
+**/bin/
+**/obj/
+
+# SQLite & LocalDB files
+*.db
+*.db-shm
+*.db-wal
+*.mdf
+*.ldf
+
+# Angular build output
+frontend-angular/dist/
+
+# Environment & secrets
+appsettings.*.json
+!appsettings.json
+.env
+.env.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.user

@@ -1,0 +1,178 @@
+<div class="mgmt-page page-enter">
+  <div class="mgmt-header">
+    <div>
+      <h1 class="mgmt-title">Room <span class="text-gradient">Management</span></h1>
+      <p class="mgmt-sub">{{ rooms().length }} rooms in inventory</p>
+    </div>
+    <button class="btn-primary" (click)="openAdd()">
+      <span class="material-icons">add</span> Add New Room
+    </button>
+  </div>
+
+  @if (isLoading()) {
+    <div class="mgmt-loading">
+      <div class="loading-spinner-lg"></div>
+    </div>
+  } @else {
+    <div class="rooms-table-wrap glass">
+      <table class="mgmt-table">
+        <thead>
+          <tr>
+            <th>Room</th>
+            <th>Type</th>
+            <th>Number</th>
+            <th>Price/Night</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th>Featured</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (room of rooms(); track room.id) {
+            <tr>
+              <td>
+                <div class="room-cell">
+                  @if (room.thumbnailUrl) {
+                    <img [src]="room.thumbnailUrl" [alt]="room.name" class="room-thumb">
+                  } @else {
+                    <div class="room-thumb-placeholder"><span class="material-icons">hotel</span></div>
+                  }
+                  <div>
+                    <span class="room-cell-name">{{ room.name }}</span>
+                    <span class="room-cell-desc">{{ room.description | slice:0:60 }}…</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="type-tag">{{ room.roomTypeName }}</span></td>
+              <td><code class="room-code">{{ room.roomNumber }}</code></td>
+              <td><strong class="price-cell">${{ room.pricePerNight }}</strong></td>
+              <td><span class="cap-cell"><span class="material-icons">group</span>{{ room.maxOccupancy }}</span></td>
+              <td><span class="badge" [class]="getStatusClass(room.status)">{{ room.status }}</span></td>
+              <td>
+                @if (room.isFeatured) {
+                  <span class="material-icons featured-star">star</span>
+                } @else {
+                  <span class="material-icons not-featured">star_border</span>
+                }
+              </td>
+              <td>
+                <div class="action-btns">
+                  <button class="action-btn edit-btn" (click)="openEdit(room)" title="Edit">
+                    <span class="material-icons">edit</span>
+                  </button>
+                  @if (deleteConfirmId() === room.id) {
+                    <div class="delete-confirm">
+                      <span>Delete?</span>
+                      <button class="action-btn confirm-del" (click)="deleteRoom(room.id)">Yes</button>
+                      <button class="action-btn cancel-del" (click)="cancelDelete()">No</button>
+                    </div>
+                  } @else {
+                    <button class="action-btn del-btn" (click)="confirmDelete(room.id)" title="Delete">
+                      <span class="material-icons">delete</span>
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
+<!-- Modal -->
+@if (showModal()) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-panel glass-dark" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingRoom() ? 'Edit Room' : 'Add New Room' }}</h2>
+        <button class="modal-close" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="modal-form">
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label">Room Name *</label>
+            <div class="field-input-wrap" [class.field-error]="form.get('name')?.invalid && form.get('name')?.touched">
+              <input type="text" formControlName="name" placeholder="Deluxe King Room">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Room Number *</label>
+            <div class="field-input-wrap">
+              <input type="text" formControlName="roomNumber" placeholder="101">
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Description *</label>
+          <div class="field-input-wrap textarea-wrap">
+            <textarea formControlName="description" rows="3" placeholder="Room description…"></textarea>
+          </div>
+        </div>
+        <div class="three-col">
+          <div class="field-group">
+            <label class="field-label">Price/Night ($) *</label>
+            <div class="field-input-wrap">
+              <input type="number" formControlName="pricePerNight" placeholder="99">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Max Guests *</label>
+            <div class="field-input-wrap">
+              <input type="number" formControlName="maxOccupancy" min="1" max="20">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Size (sqft) *</label>
+            <div class="field-input-wrap">
+              <input type="number" formControlName="sizeInSqFt" placeholder="350">
+            </div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label">Room Type *</label>
+            <div class="field-input-wrap">
+              <select formControlName="roomTypeId">
+                <option [value]="null">Select type…</option>
+                @for (t of roomTypes; track t.id) {
+                  <option [value]="t.id">{{ t.name }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Floor Number</label>
+            <div class="field-input-wrap">
+              <input type="number" formControlName="floorNumber" min="1">
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Thumbnail URL</label>
+          <div class="field-input-wrap">
+            <input type="url" formControlName="thumbnailUrl" placeholder="https://…">
+          </div>
+        </div>
+        <div class="field-group featured-toggle">
+          <label class="toggle-label">
+            <input type="checkbox" formControlName="isFeatured">
+            <span class="toggle-switch"></span>
+            <span>Mark as Featured Room</span>
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-ghost" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            @if (isSubmitting()) { <div class="spinner-sm"></div> Saving… }
+            @else { <span class="material-icons">save</span> {{ editingRoom() ? 'Update Room' : 'Create Room' }} }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

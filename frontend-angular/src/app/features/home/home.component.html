@@ -1,0 +1,495 @@
+<!-- ════════════════════════════════════════════════
+     HERO SECTION
+     ════════════════════════════════════════════════ -->
+<section class="hero" #heroSection>
+  <!-- Three.js Canvas -->
+  <canvas class="hero-canvas" #heroCanvas></canvas>
+
+  <!-- Background overlays -->
+  <div class="hero-overlay-1"></div>
+  <div class="hero-overlay-2"></div>
+
+  <!-- Animated gradient orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <div class="hero-badge reveal">
+      <span class="pulse-dot"></span>
+      <span>Now accepting reservations for 2024–2025</span>
+    </div>
+
+    <h1 class="hero-headline reveal">
+      <span class="line-1">Where Every Night</span>
+      <span class="line-2 text-gradient">Becomes a Story</span>
+    </h1>
+
+    <p class="hero-sub reveal">
+      Immerse yourself in luxury at Starry Nights Motel — where world-class comfort
+      meets breathtaking experiences. Your perfect stay awaits.
+    </p>
+
+    <!-- Quick Search Bar -->
+    <div class="search-bar glass reveal" [formGroup]="searchForm">
+      <div class="search-field">
+        <label>
+          <span class="material-icons">calendar_today</span>
+          Check-In
+        </label>
+        <input type="date" formControlName="checkIn" class="search-input"
+          [min]="today">
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-field">
+        <label>
+          <span class="material-icons">calendar_today</span>
+          Check-Out
+        </label>
+        <input type="date" formControlName="checkOut" class="search-input"
+          [min]="today">
+      </div>
+      <div class="search-divider"></div>
+      <div class="search-field">
+        <label>
+          <span class="material-icons">group</span>
+          Guests
+        </label>
+        <input type="number" formControlName="guests" class="search-input"
+          min="1" max="10" placeholder="1">
+      </div>
+      <button class="search-btn" (click)="onSearch()">
+        <span class="material-icons">search</span>
+        Find Rooms
+      </button>
+    </div>
+
+    <!-- CTA Buttons -->
+    <div class="hero-ctas reveal">
+      <a routerLink="/rooms" class="btn-primary">
+        <span class="material-icons">hotel</span>
+        Explore Rooms
+      </a>
+      <a routerLink="/register" class="btn-outline">
+        <span class="material-icons">person_add</span>
+        Create Account
+      </a>
+    </div>
+  </div>
+
+  <!-- Floating Preview Cards -->
+  <div class="floating-cards">
+    <div class="float-card float-card-1 glass-gold">
+      <span class="material-icons">star</span>
+      <div>
+        <span class="fc-val">4.9</span>
+        <span class="fc-label">Rating</span>
+      </div>
+    </div>
+    <div class="float-card float-card-2 glass">
+      <span class="material-icons">king_bed</span>
+      <div>
+        <span class="fc-val">50+</span>
+        <span class="fc-label">Rooms</span>
+      </div>
+    </div>
+    <div class="float-card float-card-3 glass-gold">
+      <span class="material-icons">celebration</span>
+      <div>
+        <span class="fc-val">500+</span>
+        <span class="fc-label">Happy Guests</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator">
+    <div class="scroll-wheel">
+      <div class="scroll-dot"></div>
+    </div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     STATS STRIP
+     ════════════════════════════════════════════════ -->
+<section class="stats-strip">
+  <div class="stats-container">
+    @for (stat of stats; track stat.label) {
+      <div class="stat-item reveal">
+        <span class="material-icons stat-icon">{{ stat.icon }}</span>
+        <div>
+          <span class="stat-value">{{ stat.value }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     FEATURED ROOMS
+     ════════════════════════════════════════════════ -->
+<section class="section featured-section" id="rooms-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Our Collection</span>
+      <h2 class="section-title">Handpicked <span class="text-gradient">Luxury Rooms</span></h2>
+      <p class="section-sub">Each room is a masterpiece of design, crafted to deliver an unforgettable experience.</p>
+    </div>
+
+    @if (isLoading()) {
+      <div class="rooms-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="room-card skeleton-card">
+            <div class="skeleton rk-img"></div>
+            <div class="rk-body">
+              <div class="skeleton" style="height:20px;width:60%;margin-bottom:8px"></div>
+              <div class="skeleton" style="height:14px;width:80%;margin-bottom:8px"></div>
+              <div class="skeleton" style="height:14px;width:40%"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="rooms-grid">
+        @for (room of featuredRooms(); track room.id) {
+          <div class="room-card reveal" [class.featured]="room.isFeatured">
+            <!-- Image Gallery -->
+            <div class="room-img-wrap">
+              <img [src]="getRoomImage(room)" [alt]="room.name" class="room-img"
+                loading="lazy">
+
+              @if ((room.imageUrls?.length ?? 0) > 1) {
+                <button class="img-nav img-prev" (click)="prevRoomImage(room, $event)">
+                  <span class="material-icons">chevron_left</span>
+                </button>
+                <button class="img-nav img-next" (click)="nextRoomImage(room, $event)">
+                  <span class="material-icons">chevron_right</span>
+                </button>
+              }
+
+              <!-- Badges -->
+              <div class="room-badges">
+                @if (room.isFeatured) {
+                  <span class="badge badge-gold">✦ Featured</span>
+                }
+                <span class="badge" [class]="getStatusBadge(room.status)">{{ room.status }}</span>
+              </div>
+
+              <!-- Price overlay -->
+              <div class="price-overlay">
+                <span class="price-amount">${{ room.pricePerNight }}</span>
+                <span class="price-night">/night</span>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="room-body">
+              <div class="room-type-tag">{{ room.roomTypeName }}</div>
+              <h3 class="room-name">{{ room.name }}</h3>
+
+              <p class="room-desc">{{ room.description }}</p>
+
+              <!-- Rating -->
+              <div class="room-rating">
+                <div class="stars">
+                  @for (s of getStars(room.averageRating); track $index) {
+                    <span class="material-icons star-filled">star</span>
+                  }
+                </div>
+                <span class="rating-val">{{ room.averageRating | number:'1.1-1' }}</span>
+                <span class="rating-count">({{ room.totalReviews }})</span>
+              </div>
+
+              <!-- Amenities Preview -->
+              <div class="room-amenities">
+                @for (amenity of room.amenities.slice(0, 4); track amenity.id) {
+                  <span class="amenity-chip" [title]="amenity.name">
+                    <span class="material-icons">{{ amenity.icon || 'check' }}</span>
+                    {{ amenity.name }}
+                  </span>
+                }
+                @if (room.amenities.length > 4) {
+                  <span class="amenity-chip more">+{{ room.amenities.length - 4 }}</span>
+                }
+              </div>
+
+              <!-- Quick Info -->
+              <div class="room-meta">
+                <span><span class="material-icons">group</span> Up to {{ room.maxOccupancy }}</span>
+                <span><span class="material-icons">straighten</span> {{ room.sizeInSqFt }} sq ft</span>
+                <span><span class="material-icons">layers</span> Floor {{ room.floorNumber }}</span>
+              </div>
+
+              <!-- Actions -->
+              <div class="room-actions">
+                <a [routerLink]="['/rooms', room.id]" class="btn-room-detail">
+                  View Details
+                </a>
+                <a [routerLink]="['/booking', room.id]" class="btn-room-book"
+                  [class.disabled]="room.status !== 'Available'">
+                  <span class="material-icons">hotel</span>
+                  Book Now
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="section-footer reveal">
+        <a routerLink="/rooms" class="btn-outline">
+          <span class="material-icons">grid_view</span>
+          View All Rooms
+        </a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     AMENITIES
+     ════════════════════════════════════════════════ -->
+<section class="section amenities-section" id="amenities-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Included Always</span>
+      <h2 class="section-title">World-Class <span class="text-gradient">Amenities</span></h2>
+      <p class="section-sub">Every amenity thoughtfully curated for your ultimate comfort and convenience.</p>
+    </div>
+
+    <div class="amenities-grid reveal">
+      @for (a of amenities; track a.name) {
+        <div class="amenity-card glass">
+          <div class="amenity-icon-wrap">
+            <span class="material-icons">{{ a.icon }}</span>
+          </div>
+          <h4 class="amenity-name">{{ a.name }}</h4>
+          <p class="amenity-desc">{{ a.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     EXPERIENCE SECTION
+     ════════════════════════════════════════════════ -->
+<section class="experience-section" id="booking-section">
+  <div class="exp-bg"></div>
+  <div class="container exp-container">
+    <div class="exp-text reveal">
+      <span class="section-tag">The Starry Nights Difference</span>
+      <h2 class="section-title">An Experience <br><span class="text-gradient">Unlike Any Other</span></h2>
+      <p class="exp-desc">
+        From the moment you step in, our dedicated team ensures every detail exceeds your expectations.
+        This isn't just a stay — it's a memory you'll cherish forever.
+      </p>
+      <ul class="exp-features">
+        <li><span class="material-icons">check_circle</span> Personalized concierge service</li>
+        <li><span class="material-icons">check_circle</span> Turndown service with artisan chocolates</li>
+        <li><span class="material-icons">check_circle</span> Premium Egyptian cotton linens</li>
+        <li><span class="material-icons">check_circle</span> In-room smart climate control</li>
+        <li><span class="material-icons">check_circle</span> Panoramic city or garden views</li>
+      </ul>
+      <a routerLink="/rooms" class="btn-primary">
+        <span class="material-icons">hotel</span>
+        Reserve Your Room
+      </a>
+    </div>
+    <div class="exp-visual reveal">
+      <div class="exp-card glass-gold">
+        <span class="material-icons">local_offer</span>
+        <h4>Best Rate Guarantee</h4>
+        <p>Book directly and always get our lowest price, guaranteed.</p>
+      </div>
+      <div class="exp-card glass">
+        <span class="material-icons">cancel</span>
+        <h4>Free Cancellation</h4>
+        <p>Plans change. Cancel for free up to 24 hours before check-in.</p>
+      </div>
+      <div class="exp-card glass-gold">
+        <span class="material-icons">star</span>
+        <h4>Loyalty Rewards</h4>
+        <p>Earn points on every stay and unlock exclusive member perks.</p>
+      </div>
+      <div class="exp-card glass">
+        <span class="material-icons">support_agent</span>
+        <h4>24/7 Concierge</h4>
+        <p>Our dedicated team is always available for any request.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     TESTIMONIALS
+     ════════════════════════════════════════════════ -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-tag">Guest Stories</span>
+      <h2 class="section-title">What Our <span class="text-gradient">Guests Say</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card glass reveal">
+        <div class="t-stars">
+          @for (s of [1,2,3,4,5]; track s) {
+            <span class="material-icons">star</span>
+          }
+        </div>
+        <p class="t-text">"Absolutely breathtaking. The penthouse suite exceeded every expectation. The staff was impeccably professional and the views were stunning. We'll be back every anniversary!"</p>
+        <div class="t-author">
+          <div class="t-avatar">JR</div>
+          <div>
+            <span class="t-name">James & Rachel Mitchell</span>
+            <span class="t-stay">Anniversary Getaway • Penthouse Suite</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card glass reveal" style="animation-delay:0.1s">
+        <div class="t-stars">
+          @for (s of [1,2,3,4,5]; track s) {
+            <span class="material-icons">star</span>
+          }
+        </div>
+        <p class="t-text">"As a frequent business traveler, I've stayed in hundreds of hotels. Starry Nights is genuinely in a class of its own. The Executive Room's work setup was perfect, and the bed was cloud-like."</p>
+        <div class="t-author">
+          <div class="t-avatar">SK</div>
+          <div>
+            <span class="t-name">Sofia Kowalski</span>
+            <span class="t-stay">Business Travel • Executive Room</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card glass reveal" style="animation-delay:0.2s">
+        <div class="t-stars">
+          @for (s of [1,2,3,4,5]; track s) {
+            <span class="material-icons">star</span>
+          }
+        </div>
+        <p class="t-text">"The family suite was perfect for our vacation. Kids loved the rooftop pool, we loved the room service at midnight. Booking was seamless and the confirmation was instant!"</p>
+        <div class="t-author">
+          <div class="t-avatar">TP</div>
+          <div>
+            <span class="t-name">The Patel Family</span>
+            <span class="t-stay">Family Vacation • Family Suite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     CTA BANNER
+     ════════════════════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="container cta-container reveal">
+    <div class="cta-text">
+      <h2>Ready for an Unforgettable Stay?</h2>
+      <p>Book your room today and experience luxury redefined.</p>
+    </div>
+    <div class="cta-actions">
+      <a routerLink="/rooms" class="btn-primary">
+        <span class="material-icons">hotel</span>
+        Book a Room
+      </a>
+      <a href="#contact" class="btn-outline">
+        <span class="material-icons">call</span>
+        Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════
+     VIRTUAL GUIDE
+     ════════════════════════════════════════════════ -->
+@if (showGuide()) {
+  <div class="guide-overlay" [class.visible]="guideVisible()">
+    <div class="guide-character">
+      <!-- Animated Character SVG -->
+      <div class="char-wrap">
+        <svg class="char-svg" viewBox="0 0 120 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body -->
+          <ellipse cx="60" cy="160" rx="28" ry="35" fill="#1a1a2e" stroke="#d4af37" stroke-width="1.5"/>
+          <!-- Jacket lapels -->
+          <path d="M40 145 L60 155 L80 145 L75 130 L60 138 L45 130 Z" fill="#d4af37" opacity="0.8"/>
+          <!-- Shirt -->
+          <rect x="52" y="135" width="16" height="25" rx="2" fill="#f0f0f0"/>
+          <!-- Tie -->
+          <polygon points="60,136 63,140 60,165 57,140" fill="#d4af37"/>
+          <!-- Arms -->
+          <ellipse cx="32" cy="150" rx="9" ry="22" fill="#1a1a2e" stroke="#d4af37" stroke-width="1" transform="rotate(-10,32,150)"/>
+          <ellipse cx="88" cy="150" rx="9" ry="22" fill="#1a1a2e" stroke="#d4af37" stroke-width="1" transform="rotate(10,88,150)" class="char-arm-wave"/>
+          <!-- Hands -->
+          <circle cx="27" cy="171" r="8" fill="#f4c878"/>
+          <circle cx="93" cy="168" r="8" fill="#f4c878"/>
+          <!-- Head -->
+          <circle cx="60" cy="72" r="32" fill="#f4c878"/>
+          <!-- Hair -->
+          <path d="M30 58 Q60 30 90 58 Q85 40 60 35 Q35 40 30 58" fill="#2c1810"/>
+          <path d="M28 65 Q25 45 35 40 Q28 50 30 65" fill="#2c1810"/>
+          <path d="M92 65 Q95 45 85 40 Q92 50 90 65" fill="#2c1810"/>
+          <!-- Eyes -->
+          <ellipse cx="48" cy="68" rx="6" ry="7" fill="white"/>
+          <ellipse cx="72" cy="68" rx="6" ry="7" fill="white"/>
+          <circle cx="49" cy="69" r="4" fill="#2c1810"/>
+          <circle cx="73" cy="69" r="4" fill="#2c1810"/>
+          <circle cx="50" cy="68" r="1.5" fill="white"/>
+          <circle cx="74" cy="68" r="1.5" fill="white"/>
+          <!-- Eyebrows -->
+          <path d="M42 60 Q48 57 54 60" stroke="#2c1810" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M66 60 Q72 57 78 60" stroke="#2c1810" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Smile -->
+          <path d="M48 82 Q60 92 72 82" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Cheeks -->
+          <circle cx="42" cy="78" r="6" fill="#ff9eb5" opacity="0.4"/>
+          <circle cx="78" cy="78" r="6" fill="#ff9eb5" opacity="0.4"/>
+          <!-- Name tag -->
+          <rect x="44" y="140" width="32" height="14" rx="3" fill="white" stroke="#d4af37" stroke-width="1"/>
+          <text x="60" y="150" text-anchor="middle" font-size="7" fill="#0a0a0f" font-family="Inter" font-weight="700">GUIDE</text>
+          <!-- Gold star on lapel -->
+          <text x="46" y="140" font-size="10" fill="#d4af37">★</text>
+        </svg>
+        <!-- Wave animation overlay -->
+        <div class="char-particles">
+          <span class="cp cp-1">✦</span>
+          <span class="cp cp-2">✦</span>
+          <span class="cp cp-3">✦</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Speech Bubble -->
+    <div class="guide-bubble">
+      <div class="bubble-header">
+        <span class="bubble-icon">{{ guideSteps[activeGuideStep()].icon }}</span>
+        <strong>{{ guideSteps[activeGuideStep()].title }}</strong>
+        <button class="bubble-close" (click)="dismissGuide()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <p class="bubble-msg">{{ guideSteps[activeGuideStep()].message }}</p>
+      <div class="bubble-footer">
+        <div class="bubble-dots">
+          @for (step of guideSteps; track $index) {
+            <span class="bdot" [class.active]="$index === activeGuideStep()"></span>
+          }
+        </div>
+        <button class="btn-bubble-next" (click)="nextGuideStep()">
+          @if (activeGuideStep() < guideSteps.length - 1) {
+            Next <span class="material-icons">arrow_forward</span>
+          } @else {
+            Let's Go! <span class="material-icons">rocket_launch</span>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}

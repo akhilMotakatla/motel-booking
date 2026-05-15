@@ -1,0 +1,829 @@
+2026-05-15 11:59:49.403 -05:00 [WRN] Entity 'User' has a global query filter defined and is the required end of a relationship with the entity 'Notification'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 11:59:49.444 -05:00 [WRN] Entity 'Booking' has a global query filter defined and is the required end of a relationship with the entity 'Payment'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 11:59:49.446 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'Review'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 11:59:49.448 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'RoomAmenity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 11:59:49.449 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'RoomImage'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:00.114 -05:00 [WRN] Entity 'User' has a global query filter defined and is the required end of a relationship with the entity 'Notification'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:00.116 -05:00 [WRN] Entity 'Booking' has a global query filter defined and is the required end of a relationship with the entity 'Payment'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:00.117 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'Review'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:00.119 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'RoomAmenity'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:00.119 -05:00 [WRN] Entity 'Room' has a global query filter defined and is the required end of a relationship with the entity 'RoomImage'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-05-15 12:00:01.362 -05:00 [ERR] Failed executing DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [RoomTypes] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-15 12:00:01.383 -05:00 [ERR] An exception occurred while iterating over the results of a query for context type 'MotelBooking.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:9fc016eb-601d-4372-90bf-678f70d14658
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:9fc016eb-601d-4372-90bf-678f70d14658
+Error Number:208,State:1,Class:16
+2026-05-15 14:47:05.333 -05:00 [ERR] Failed executing DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [RoomTypes] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-15 14:47:05.463 -05:00 [ERR] An exception occurred while iterating over the results of a query for context type 'MotelBooking.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7580e45c-76b6-4e33-be9e-e927c6c47ef9
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:7580e45c-76b6-4e33-be9e-e927c6c47ef9
+Error Number:208,State:1,Class:16
+2026-05-15 14:53:08.023 -05:00 [ERR] Failed executing DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [RoomTypes] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-15 14:53:08.085 -05:00 [ERR] An exception occurred while iterating over the results of a query for context type 'MotelBooking.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:5672a389-0faf-41c9-b712-9f5b0661a43a
+Error Number:208,State:1,Class:16
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid object name 'RoomTypes'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__211_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:5672a389-0faf-41c9-b712-9f5b0661a43a
+Error Number:208,State:1,Class:16
+2026-05-15 15:12:41.285 -05:00 [INF] Executed DbCommand (317ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [MotelBookingDb];
+2026-05-15 15:12:41.579 -05:00 [INF] Executed DbCommand (213ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [MotelBookingDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2026-05-15 15:12:41.640 -05:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:12:41.833 -05:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2026-05-15 15:12:41.839 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:12:41.880 -05:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-15 15:12:41.895 -05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-05-15 15:12:41.916 -05:00 [INF] Applying migration '20260515200821_InitialCreate'.
+2026-05-15 15:12:41.992 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Amenities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Icon] nvarchar(max) NULL,
+    [Category] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Amenities] PRIMARY KEY ([Id])
+);
+2026-05-15 15:12:41.995 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [IconUrl] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_RoomTypes] PRIMARY KEY ([Id])
+);
+2026-05-15 15:12:41.998 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FullName] nvarchar(100) NOT NULL,
+    [Email] nvarchar(150) NOT NULL,
+    [PasswordHash] nvarchar(max) NOT NULL,
+    [PhoneNumber] nvarchar(20) NULL,
+    [Address] nvarchar(250) NULL,
+    [City] nvarchar(100) NULL,
+    [State] nvarchar(100) NULL,
+    [ZipCode] nvarchar(20) NULL,
+    [ProfileImageUrl] nvarchar(max) NULL,
+    [IsEmailVerified] bit NOT NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [RefreshTokenExpiry] datetime2 NULL,
+    [Role] nvarchar(50) NOT NULL DEFAULT N'Customer',
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2026-05-15 15:12:42.001 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Rooms] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(150) NOT NULL,
+    [Description] nvarchar(2000) NOT NULL,
+    [PricePerNight] decimal(10,2) NOT NULL,
+    [MaxOccupancy] int NOT NULL,
+    [FloorNumber] int NOT NULL,
+    [RoomNumber] nvarchar(20) NOT NULL,
+    [SizeInSqFt] float NOT NULL,
+    [Status] int NOT NULL,
+    [ThumbnailUrl] nvarchar(max) NULL,
+    [AverageRating] float NOT NULL,
+    [TotalReviews] int NOT NULL,
+    [IsFeatured] bit NOT NULL,
+    [RoomTypeId] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Rooms] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Rooms_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:12:42.007 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Notifications] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [Title] nvarchar(max) NOT NULL,
+    [Message] nvarchar(max) NOT NULL,
+    [Type] nvarchar(max) NOT NULL,
+    [IsRead] bit NOT NULL,
+    [ActionUrl] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Notifications_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:12:42.013 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Bookings] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [RoomId] int NOT NULL,
+    [CheckInDate] datetime2 NOT NULL,
+    [CheckOutDate] datetime2 NOT NULL,
+    [NumberOfGuests] int NOT NULL,
+    [TotalAmount] decimal(10,2) NOT NULL,
+    [TaxAmount] decimal(10,2) NOT NULL,
+    [DiscountAmount] decimal(10,2) NOT NULL,
+    [Status] int NOT NULL,
+    [SpecialRequests] nvarchar(max) NULL,
+    [ConfirmationNumber] nvarchar(30) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Bookings] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Bookings_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Bookings_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:12:42.022 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Reviews] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [RoomId] int NOT NULL,
+    [Rating] int NOT NULL,
+    [Title] nvarchar(max) NOT NULL,
+    [Comment] nvarchar(max) NOT NULL,
+    [IsVerified] bit NOT NULL,
+    [IsApproved] bit NOT NULL,
+    [CleanlinessRating] int NOT NULL,
+    [ServiceRating] int NOT NULL,
+    [ValueRating] int NOT NULL,
+    [LocationRating] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Reviews] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Reviews_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Reviews_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:12:42.029 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomAmenities] (
+    [RoomId] int NOT NULL,
+    [AmenityId] int NOT NULL,
+    CONSTRAINT [PK_RoomAmenities] PRIMARY KEY ([RoomId], [AmenityId]),
+    CONSTRAINT [FK_RoomAmenities_Amenities_AmenityId] FOREIGN KEY ([AmenityId]) REFERENCES [Amenities] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_RoomAmenities_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:12:42.036 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomImages] (
+    [Id] int NOT NULL IDENTITY,
+    [RoomId] int NOT NULL,
+    [ImageUrl] nvarchar(max) NOT NULL,
+    [AltText] nvarchar(max) NULL,
+    [IsPrimary] bit NOT NULL,
+    [SortOrder] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_RoomImages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_RoomImages_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:12:42.044 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Payments] (
+    [Id] int NOT NULL IDENTITY,
+    [BookingId] int NOT NULL,
+    [Amount] decimal(10,2) NOT NULL,
+    [Currency] nvarchar(10) NOT NULL DEFAULT N'USD',
+    [Status] int NOT NULL,
+    [TransactionId] nvarchar(100) NULL,
+    [PaymentMethod] nvarchar(max) NULL,
+    [PaidAt] datetime2 NULL,
+    [FailureReason] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Payments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Payments_Bookings_BookingId] FOREIGN KEY ([BookingId]) REFERENCES [Bookings] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:12:42.048 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Bookings_ConfirmationNumber] ON [Bookings] ([ConfirmationNumber]) WHERE [ConfirmationNumber] IS NOT NULL;
+2026-05-15 15:12:42.052 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_RoomId] ON [Bookings] ([RoomId]);
+2026-05-15 15:12:42.055 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_UserId] ON [Bookings] ([UserId]);
+2026-05-15 15:12:42.058 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_UserId] ON [Notifications] ([UserId]);
+2026-05-15 15:12:42.061 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Payments_BookingId] ON [Payments] ([BookingId]);
+2026-05-15 15:12:42.063 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Reviews_RoomId] ON [Reviews] ([RoomId]);
+2026-05-15 15:12:42.066 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Reviews_UserId] ON [Reviews] ([UserId]);
+2026-05-15 15:12:42.069 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_RoomAmenities_AmenityId] ON [RoomAmenities] ([AmenityId]);
+2026-05-15 15:12:42.072 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_RoomImages_RoomId] ON [RoomImages] ([RoomId]);
+2026-05-15 15:12:42.077 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Rooms_RoomNumber] ON [Rooms] ([RoomNumber]);
+2026-05-15 15:12:42.081 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Rooms_RoomTypeId] ON [Rooms] ([RoomTypeId]);
+2026-05-15 15:12:42.084 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2026-05-15 15:12:42.092 -05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260515200821_InitialCreate', N'8.0.8');
+2026-05-15 15:13:21.216 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.DefaultAddressStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-05-15 15:13:33.167 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-05-15 15:13:33.826 -05:00 [INF] HTTP GET /api/rooms/featured responded 200 in 662.8218 ms
+2026-05-15 15:13:45.212 -05:00 [INF] HTTP POST /api/auth/login responded 200 in 1066.8472 ms
+2026-05-15 15:20:43.549 -05:00 [INF] HTTP GET /api/rooms/featured responded 200 in 172.2853 ms
+2026-05-15 15:21:05.943 -05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-05-15 15:21:06.043 -05:00 [INF] HTTP GET /api/rooms responded 200 in 298.2139 ms
+2026-05-15 15:21:53.008 -05:00 [INF] HTTP GET / responded 404 in 0.8462 ms
+2026-05-15 15:22:05.629 -05:00 [INF] HTTP GET /swagger responded 404 in 0.3813 ms
+2026-05-15 15:24:08.212 -05:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 5.6497 ms
+2026-05-15 15:24:08.264 -05:00 [INF] HTTP POST /api/auth/register responded 400 in 48.2618 ms
+2026-05-15 15:24:16.368 -05:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 0.3874 ms
+2026-05-15 15:24:16.401 -05:00 [INF] HTTP POST /api/auth/register responded 400 in 27.0423 ms
+2026-05-15 15:24:45.583 -05:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 0.2285 ms
+2026-05-15 15:24:45.601 -05:00 [INF] HTTP POST /api/auth/register responded 400 in 13.0907 ms
+2026-05-15 15:27:14.668 -05:00 [INF] HTTP POST /api/auth/register responded 200 in 1135.1246 ms
+2026-05-15 15:28:29.619 -05:00 [INF] HTTP OPTIONS /api/auth/register responded 204 in 0.1986 ms
+2026-05-15 15:28:30.398 -05:00 [INF] HTTP POST /api/auth/register responded 200 in 774.5021 ms
+2026-05-15 15:28:30.494 -05:00 [INF] HTTP OPTIONS /api/users/me responded 204 in 0.1382 ms
+2026-05-15 15:28:30.494 -05:00 [INF] HTTP OPTIONS /api/bookings/my responded 204 in 0.0704 ms
+2026-05-15 15:28:30.768 -05:00 [INF] HTTP GET /api/users/me responded 200 in 267.8489 ms
+2026-05-15 15:28:30.782 -05:00 [INF] HTTP GET /api/bookings/my responded 200 in 281.0850 ms
+2026-05-15 15:28:44.732 -05:00 [INF] HTTP OPTIONS /api/rooms responded 204 in 0.4479 ms
+2026-05-15 15:28:44.805 -05:00 [INF] HTTP GET /api/rooms responded 200 in 68.3258 ms
+2026-05-15 15:28:48.594 -05:00 [INF] HTTP OPTIONS /api/rooms/4 responded 204 in 0.1628 ms
+2026-05-15 15:28:48.705 -05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-05-15 15:28:48.800 -05:00 [INF] HTTP GET /api/rooms/4 responded 200 in 201.9124 ms
+2026-05-15 15:31:04.690 -05:00 [INF] HTTP OPTIONS /api/rooms/4 responded 204 in 0.7391 ms
+2026-05-15 15:31:04.765 -05:00 [INF] HTTP GET /api/rooms/4 responded 200 in 29.4445 ms
+2026-05-15 15:32:21.168 -05:00 [INF] HTTP OPTIONS /api/bookings responded 204 in 0.4228 ms
+2026-05-15 15:32:21.595 -05:00 [INF] HTTP POST /api/bookings responded 201 in 418.3520 ms
+2026-05-15 15:32:25.850 -05:00 [INF] HTTP OPTIONS /api/users/me responded 204 in 0.1986 ms
+2026-05-15 15:32:25.853 -05:00 [INF] HTTP OPTIONS /api/bookings/my responded 204 in 0.6081 ms
+2026-05-15 15:32:25.889 -05:00 [INF] HTTP GET /api/users/me responded 200 in 25.9301 ms
+2026-05-15 15:32:25.907 -05:00 [INF] HTTP GET /api/bookings/my responded 200 in 46.7578 ms
+2026-05-15 15:32:52.256 -05:00 [INF] HTTP GET /swagger responded 404 in 0.3580 ms
+2026-05-15 15:45:24.307 -05:00 [INF] HTTP OPTIONS /api/auth/logout responded 204 in 1.3418 ms
+2026-05-15 15:45:29.899 -05:00 [INF] HTTP GET /api/rooms/featured responded 200 in 5301.3180 ms
+2026-05-15 15:45:29.907 -05:00 [INF] HTTP POST /api/auth/logout responded 200 in 5596.8185 ms
+2026-05-15 15:46:10.954 -05:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.2512 ms
+2026-05-15 15:46:12.160 -05:00 [INF] HTTP POST /api/auth/login responded 401 in 1203.9768 ms
+2026-05-15 15:46:31.696 -05:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.4367 ms
+2026-05-15 15:46:32.710 -05:00 [INF] HTTP POST /api/auth/login responded 401 in 1011.3388 ms
+2026-05-15 15:56:54.322 -05:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:56:54.396 -05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-15 15:56:54.400 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:56:54.402 -05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-15 15:56:54.433 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-05-15 15:56:54.464 -05:00 [INF] Applying migration '20260515205626_AddLocationsAndEmail'.
+2026-05-15 15:56:54.641 -05:00 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Rooms] ADD [LocationId] int NULL;
+2026-05-15 15:56:54.646 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Bookings] ADD [LocationId] int NULL;
+2026-05-15 15:56:54.655 -05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Locations] (
+    [Id] int NOT NULL IDENTITY,
+    [State] nvarchar(100) NOT NULL,
+    [StateCode] nvarchar(5) NOT NULL,
+    [City] nvarchar(100) NOT NULL,
+    [BranchName] nvarchar(200) NOT NULL,
+    [BranchCode] nvarchar(30) NOT NULL,
+    [Address] nvarchar(300) NOT NULL,
+    [PhoneNumber] nvarchar(20) NULL,
+    [Email] nvarchar(150) NULL,
+    [Latitude] float NOT NULL,
+    [Longitude] float NOT NULL,
+    [IsActive] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Locations] PRIMARY KEY ([Id])
+);
+2026-05-15 15:56:54.664 -05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Rooms_LocationId] ON [Rooms] ([LocationId]);
+2026-05-15 15:56:54.672 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_LocationId] ON [Bookings] ([LocationId]);
+2026-05-15 15:56:54.674 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Locations_BranchCode] ON [Locations] ([BranchCode]);
+2026-05-15 15:56:54.677 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Locations_State] ON [Locations] ([State]);
+2026-05-15 15:56:54.679 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Locations_State_City] ON [Locations] ([State], [City]);
+2026-05-15 15:56:54.687 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Bookings] ADD CONSTRAINT [FK_Bookings_Locations_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [Locations] ([Id]) ON DELETE SET NULL;
+2026-05-15 15:56:54.695 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Rooms] ADD CONSTRAINT [FK_Rooms_Locations_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [Locations] ([Id]) ON DELETE SET NULL;
+2026-05-15 15:56:54.700 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260515205626_AddLocationsAndEmail', N'8.0.8');
+2026-05-15 15:57:10.013 -05:00 [ERR] An exception occurred in the database while saving changes for context type 'MotelBooking.Infrastructure.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.Locations' with unique index 'IX_Locations_BranchCode'. The duplicate key value is (SNM-UT-WEST001).
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:af36c9c3-aa5e-4b5f-974d-07be71d273e8
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert duplicate key row in object 'dbo.Locations' with unique index 'IX_Locations_BranchCode'. The duplicate key value is (SNM-UT-WEST001).
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:af36c9c3-aa5e-4b5f-974d-07be71d273e8
+Error Number:2601,State:1,Class:14
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2026-05-15 15:59:17.606 -05:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:59:17.731 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [MotelBookingDb] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2026-05-15 15:59:17.760 -05:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [MotelBookingDb];
+2026-05-15 15:59:31.981 -05:00 [INF] Executed DbCommand (379ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [MotelBookingDb];
+2026-05-15 15:59:32.327 -05:00 [INF] Executed DbCommand (224ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [MotelBookingDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2026-05-15 15:59:32.358 -05:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:59:32.500 -05:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+2026-05-15 15:59:32.503 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-15 15:59:32.536 -05:00 [INF] Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-15 15:59:32.547 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-05-15 15:59:32.594 -05:00 [INF] Applying migration '20260515200821_InitialCreate'.
+2026-05-15 15:59:32.789 -05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Amenities] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Icon] nvarchar(max) NULL,
+    [Category] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Amenities] PRIMARY KEY ([Id])
+);
+2026-05-15 15:59:32.794 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomTypes] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Description] nvarchar(max) NOT NULL,
+    [IconUrl] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_RoomTypes] PRIMARY KEY ([Id])
+);
+2026-05-15 15:59:32.802 -05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Users] (
+    [Id] int NOT NULL IDENTITY,
+    [FullName] nvarchar(100) NOT NULL,
+    [Email] nvarchar(150) NOT NULL,
+    [PasswordHash] nvarchar(max) NOT NULL,
+    [PhoneNumber] nvarchar(20) NULL,
+    [Address] nvarchar(250) NULL,
+    [City] nvarchar(100) NULL,
+    [State] nvarchar(100) NULL,
+    [ZipCode] nvarchar(20) NULL,
+    [ProfileImageUrl] nvarchar(max) NULL,
+    [IsEmailVerified] bit NOT NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [RefreshTokenExpiry] datetime2 NULL,
+    [Role] nvarchar(50) NOT NULL DEFAULT N'Customer',
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id])
+);
+2026-05-15 15:59:32.809 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Rooms] (
+    [Id] int NOT NULL IDENTITY,
+    [Name] nvarchar(150) NOT NULL,
+    [Description] nvarchar(2000) NOT NULL,
+    [PricePerNight] decimal(10,2) NOT NULL,
+    [MaxOccupancy] int NOT NULL,
+    [FloorNumber] int NOT NULL,
+    [RoomNumber] nvarchar(20) NOT NULL,
+    [SizeInSqFt] float NOT NULL,
+    [Status] int NOT NULL,
+    [ThumbnailUrl] nvarchar(max) NULL,
+    [AverageRating] float NOT NULL,
+    [TotalReviews] int NOT NULL,
+    [IsFeatured] bit NOT NULL,
+    [RoomTypeId] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Rooms] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Rooms_RoomTypes_RoomTypeId] FOREIGN KEY ([RoomTypeId]) REFERENCES [RoomTypes] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:59:32.814 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Notifications] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [Title] nvarchar(max) NOT NULL,
+    [Message] nvarchar(max) NOT NULL,
+    [Type] nvarchar(max) NOT NULL,
+    [IsRead] bit NOT NULL,
+    [ActionUrl] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Notifications] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Notifications_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:59:32.821 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Bookings] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [RoomId] int NOT NULL,
+    [CheckInDate] datetime2 NOT NULL,
+    [CheckOutDate] datetime2 NOT NULL,
+    [NumberOfGuests] int NOT NULL,
+    [TotalAmount] decimal(10,2) NOT NULL,
+    [TaxAmount] decimal(10,2) NOT NULL,
+    [DiscountAmount] decimal(10,2) NOT NULL,
+    [Status] int NOT NULL,
+    [SpecialRequests] nvarchar(max) NULL,
+    [ConfirmationNumber] nvarchar(30) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Bookings] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Bookings_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Bookings_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:59:32.828 -05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Reviews] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [RoomId] int NOT NULL,
+    [Rating] int NOT NULL,
+    [Title] nvarchar(max) NOT NULL,
+    [Comment] nvarchar(max) NOT NULL,
+    [IsVerified] bit NOT NULL,
+    [IsApproved] bit NOT NULL,
+    [CleanlinessRating] int NOT NULL,
+    [ServiceRating] int NOT NULL,
+    [ValueRating] int NOT NULL,
+    [LocationRating] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Reviews] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Reviews_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Reviews_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE NO ACTION
+);
+2026-05-15 15:59:32.831 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomAmenities] (
+    [RoomId] int NOT NULL,
+    [AmenityId] int NOT NULL,
+    CONSTRAINT [PK_RoomAmenities] PRIMARY KEY ([RoomId], [AmenityId]),
+    CONSTRAINT [FK_RoomAmenities_Amenities_AmenityId] FOREIGN KEY ([AmenityId]) REFERENCES [Amenities] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_RoomAmenities_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:59:32.834 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [RoomImages] (
+    [Id] int NOT NULL IDENTITY,
+    [RoomId] int NOT NULL,
+    [ImageUrl] nvarchar(max) NOT NULL,
+    [AltText] nvarchar(max) NULL,
+    [IsPrimary] bit NOT NULL,
+    [SortOrder] int NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_RoomImages] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_RoomImages_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [Rooms] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:59:32.839 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Payments] (
+    [Id] int NOT NULL IDENTITY,
+    [BookingId] int NOT NULL,
+    [Amount] decimal(10,2) NOT NULL,
+    [Currency] nvarchar(10) NOT NULL DEFAULT N'USD',
+    [Status] int NOT NULL,
+    [TransactionId] nvarchar(100) NULL,
+    [PaymentMethod] nvarchar(max) NULL,
+    [PaidAt] datetime2 NULL,
+    [FailureReason] nvarchar(max) NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Payments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Payments_Bookings_BookingId] FOREIGN KEY ([BookingId]) REFERENCES [Bookings] ([Id]) ON DELETE CASCADE
+);
+2026-05-15 15:59:32.844 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Bookings_ConfirmationNumber] ON [Bookings] ([ConfirmationNumber]) WHERE [ConfirmationNumber] IS NOT NULL;
+2026-05-15 15:59:32.848 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_RoomId] ON [Bookings] ([RoomId]);
+2026-05-15 15:59:32.851 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_UserId] ON [Bookings] ([UserId]);
+2026-05-15 15:59:32.854 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Notifications_UserId] ON [Notifications] ([UserId]);
+2026-05-15 15:59:32.856 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Payments_BookingId] ON [Payments] ([BookingId]);
+2026-05-15 15:59:32.859 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Reviews_RoomId] ON [Reviews] ([RoomId]);
+2026-05-15 15:59:32.863 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Reviews_UserId] ON [Reviews] ([UserId]);
+2026-05-15 15:59:32.866 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_RoomAmenities_AmenityId] ON [RoomAmenities] ([AmenityId]);
+2026-05-15 15:59:32.869 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_RoomImages_RoomId] ON [RoomImages] ([RoomId]);
+2026-05-15 15:59:32.874 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Rooms_RoomNumber] ON [Rooms] ([RoomNumber]);
+2026-05-15 15:59:32.877 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Rooms_RoomTypeId] ON [Rooms] ([RoomTypeId]);
+2026-05-15 15:59:32.880 -05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Users_Email] ON [Users] ([Email]);
+2026-05-15 15:59:32.886 -05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260515200821_InitialCreate', N'8.0.8');
+2026-05-15 15:59:32.892 -05:00 [INF] Applying migration '20260515205626_AddLocationsAndEmail'.
+2026-05-15 15:59:32.925 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Rooms] ADD [LocationId] int NULL;
+2026-05-15 15:59:32.926 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Bookings] ADD [LocationId] int NULL;
+2026-05-15 15:59:32.931 -05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Locations] (
+    [Id] int NOT NULL IDENTITY,
+    [State] nvarchar(100) NOT NULL,
+    [StateCode] nvarchar(5) NOT NULL,
+    [City] nvarchar(100) NOT NULL,
+    [BranchName] nvarchar(200) NOT NULL,
+    [BranchCode] nvarchar(30) NOT NULL,
+    [Address] nvarchar(300) NOT NULL,
+    [PhoneNumber] nvarchar(20) NULL,
+    [Email] nvarchar(150) NULL,
+    [Latitude] float NOT NULL,
+    [Longitude] float NOT NULL,
+    [IsActive] bit NOT NULL,
+    [CreatedAt] datetime2 NOT NULL,
+    [UpdatedAt] datetime2 NULL,
+    [IsDeleted] bit NOT NULL,
+    CONSTRAINT [PK_Locations] PRIMARY KEY ([Id])
+);
+2026-05-15 15:59:32.933 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Rooms_LocationId] ON [Rooms] ([LocationId]);
+2026-05-15 15:59:32.935 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Bookings_LocationId] ON [Bookings] ([LocationId]);
+2026-05-15 15:59:32.936 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Locations_BranchCode] ON [Locations] ([BranchCode]);
+2026-05-15 15:59:32.938 -05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Locations_State] ON [Locations] ([State]);
+2026-05-15 15:59:32.939 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Locations_State_City] ON [Locations] ([State], [City]);
+2026-05-15 15:59:32.941 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Bookings] ADD CONSTRAINT [FK_Bookings_Locations_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [Locations] ([Id]) ON DELETE SET NULL;
+2026-05-15 15:59:32.942 -05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Rooms] ADD CONSTRAINT [FK_Rooms_Locations_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [Locations] ([Id]) ON DELETE SET NULL;
+2026-05-15 15:59:32.943 -05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20260515205626_AddLocationsAndEmail', N'8.0.8');
+2026-05-15 16:01:40.155 -05:00 [WRN] Failed to determine the https port for redirect.
+2026-05-15 16:01:40.593 -05:00 [INF] HTTP GET /api/locations/states responded 200 in 448.9197 ms
+2026-05-15 16:01:40.927 -05:00 [INF] HTTP GET /api/locations/states responded 200 in 191.0584 ms
+2026-05-15 16:13:48.741 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.DefaultAddressStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+2026-05-15 16:14:12.394 -05:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Only one usage of each socket address (protocol/network address/port) is normally permitted.
+ ---> System.Net.Sockets.SocketException (10048): Only one usage of each socket address (protocol/network address/port) is normally permitted.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.DefaultAddressStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)

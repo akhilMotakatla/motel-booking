@@ -1,0 +1,71 @@
+<div class="admin-shell" [class.sidebar-collapsed]="!sidebarOpen()">
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <a routerLink="/" class="sidebar-logo">
+        <span class="logo-star">✦</span>
+        @if (sidebarOpen()) {
+          <div class="logo-text">
+            <span class="logo-main">Starry Nights</span>
+            <span class="logo-sub">Admin Panel</span>
+          </div>
+        }
+      </a>
+      <button class="toggle-btn" (click)="toggle()">
+        <span class="material-icons">{{ sidebarOpen() ? 'menu_open' : 'menu' }}</span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      @for (item of navItems; track item.route) {
+        <a [routerLink]="item.route" routerLinkActive="active"
+          class="nav-item" [title]="!sidebarOpen() ? item.label : ''">
+          <span class="material-icons">{{ item.icon }}</span>
+          @if (sidebarOpen()) { <span class="nav-label">{{ item.label }}</span> }
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="/" class="nav-item" [title]="!sidebarOpen() ? 'View Site' : ''">
+        <span class="material-icons">open_in_new</span>
+        @if (sidebarOpen()) { <span class="nav-label">View Site</span> }
+      </a>
+      <button class="nav-item logout-btn" (click)="authService.logout()"
+        [title]="!sidebarOpen() ? 'Sign Out' : ''">
+        <span class="material-icons">logout</span>
+        @if (sidebarOpen()) { <span class="nav-label">Sign Out</span> }
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="admin-main">
+    <header class="admin-header glass">
+      <div class="header-left">
+        <button class="mobile-toggle" (click)="toggle()">
+          <span class="material-icons">menu</span>
+        </button>
+        <div class="header-breadcrumb">Admin Portal</div>
+      </div>
+      <div class="header-right">
+        <div class="admin-user">
+          <div class="admin-avatar">
+            {{ authService.currentUser()?.fullName?.[0]?.toUpperCase() }}
+          </div>
+          @if (sidebarOpen()) {
+            <div class="admin-info">
+              <span class="admin-name">{{ authService.currentUser()?.fullName }}</span>
+              <span class="admin-role">Administrator</span>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

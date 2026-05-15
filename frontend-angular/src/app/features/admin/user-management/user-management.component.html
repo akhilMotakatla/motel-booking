@@ -1,0 +1,68 @@
+<div class="mgmt-page page-enter">
+  <div class="mgmt-header">
+    <div>
+      <h1 class="mgmt-title">User <span class="text-gradient">Management</span></h1>
+      <p class="mgmt-sub">{{ users().length }} registered members</p>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="mgmt-loading"><div class="loading-spinner-lg"></div></div>
+  } @else {
+    <div class="rooms-table-wrap glass">
+      <table class="mgmt-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Verified</th>
+            <th>Bookings</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users(); track user.id) {
+            <tr>
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-av">{{ user.fullName[0] }}</div>
+                  <div>
+                    <span class="room-cell-name">{{ user.fullName }}</span>
+                    <span class="room-cell-desc">{{ user.email }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{ user.phoneNumber || '—' }}</td>
+              <td><span class="badge" [class]="getRoleBadge(user.role)">{{ user.role }}</span></td>
+              <td>
+                <span class="material-icons" [style.color]="user.isEmailVerified ? '#4ade80' : 'rgba(248,248,248,0.2)'">
+                  {{ user.isEmailVerified ? 'verified' : 'unpublished' }}
+                </span>
+              </td>
+              <td><strong>{{ user.totalBookings }}</strong></td>
+              <td>{{ user.createdAt | date:'MMM d, y' }}</td>
+              <td>
+                <div class="action-btns">
+                  @if (deleteConfirmId() === user.id) {
+                    <div class="delete-confirm">
+                      <span>Remove?</span>
+                      <button class="action-btn confirm-del" (click)="deleteUser(user.id)">Yes</button>
+                      <button class="action-btn cancel-del" (click)="cancelDelete()">No</button>
+                    </div>
+                  } @else {
+                    <button class="action-btn del-btn" (click)="confirmDelete(user.id)"
+                      title="Remove User" [disabled]="user.role === 'Admin'">
+                      <span class="material-icons">person_remove</span>
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

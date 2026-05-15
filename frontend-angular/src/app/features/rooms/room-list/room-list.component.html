@@ -1,0 +1,266 @@
+<div class="rooms-page page-enter">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="ph-bg">
+      <div class="ph-orb ph-orb-1"></div>
+      <div class="ph-orb ph-orb-2"></div>
+    </div>
+    <div class="container ph-content">
+      <span class="section-tag">Our Collection</span>
+      <h1 class="page-title">Discover Your <span class="text-gradient">Perfect Room</span></h1>
+      <p class="page-sub">{{ totalCount }} premium rooms curated for your ultimate comfort and luxury experience.</p>
+    </div>
+  </div>
+
+  <div class="container rooms-layout">
+
+    <!-- ── Location Cascade ───────────────────────────── -->
+    <div class="location-cascade glass">
+      <div class="lc-header">
+        <span class="material-icons">location_on</span>
+        <strong>Find Rooms by Location</strong>
+        @if (locationSummary) {
+          <span class="lc-active-badge">
+            <span class="material-icons">place</span>{{ locationSummary }}
+            <button class="lc-clear" (click)="clearLocation()">
+              <span class="material-icons">close</span>
+            </button>
+          </span>
+        }
+        @if (locationLoading()) {
+          <div class="lc-spinner"></div>
+        }
+      </div>
+      <div class="lc-selects">
+        <!-- State -->
+        <div class="lc-select-wrap">
+          <span class="material-icons lc-ico">map</span>
+          <select class="lc-select"
+            [value]="selectedState()"
+            (change)="onStateChange($any($event.target).value)">
+            <option value="">All States ({{ states().length }})</option>
+            @for (s of states(); track s.stateCode) {
+              <option [value]="s.state">{{ s.state }} ({{ s.branchCount }} branches)</option>
+            }
+          </select>
+        </div>
+
+        <!-- City -->
+        <div class="lc-select-wrap" [class.lc-disabled]="!selectedState()">
+          <span class="material-icons lc-ico">location_city</span>
+          <select class="lc-select"
+            [disabled]="!selectedState()"
+            [value]="selectedCity()"
+            (change)="onCityChange($any($event.target).value)">
+            <option value="">{{ selectedState() ? 'All Cities' : 'Select State First' }}</option>
+            @for (c of cities(); track c.city) {
+              <option [value]="c.city">{{ c.city }} ({{ c.branchCount }} branches)</option>
+            }
+          </select>
+        </div>
+
+        <!-- Branch -->
+        <div class="lc-select-wrap" [class.lc-disabled]="!selectedCity()">
+          <span class="material-icons lc-ico">storefront</span>
+          <select class="lc-select"
+            [disabled]="!selectedCity()"
+            (change)="onBranchChange(branches()[$any($event.target).value] || null)">
+            <option value="">{{ selectedCity() ? 'All Branches' : 'Select City First' }}</option>
+            @for (b of branches(); track b.id; let idx = $index) {
+              <option [value]="idx">{{ b.branchName }} — {{ b.address }}</option>
+            }
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar glass">
+      <!-- Search -->
+      <div class="search-wrap" [formGroup]="filterForm">
+        <span class="material-icons search-ico">search</span>
+        <input type="text" formControlName="search" class="filter-search"
+          placeholder="Search rooms by name, type…">
+      </div>
+
+      <!-- Type Pills -->
+      <div class="type-pills">
+        @for (t of roomTypes; track t.id) {
+          <button class="type-pill"
+            [class.active]="selectedTypeId === t.id"
+            (click)="selectType(t.id)">
+            {{ t.name }}
+          </button>
+        }
+      </div>
+
+      <!-- Controls -->
+      <div class="filter-controls">
+        <button class="filter-btn" (click)="showFilters.set(!showFilters())">
+          <span class="material-icons">tune</span>
+          Filters
+        </button>
+        <div class="view-toggle">
+          <button [class.active]="viewMode()==='grid'" (click)="viewMode.set('grid')">
+            <span class="material-icons">grid_view</span>
+          </button>
+          <button [class.active]="viewMode()==='list'" (click)="viewMode.set('list')">
+            <span class="material-icons">view_list</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced Filters Panel -->
+    @if (showFilters()) {
+      <div class="filters-panel glass">
+        <form [formGroup]="filterForm" class="filters-grid">
+          <div class="filter-field">
+            <label>Min Price ($/night)</label>
+            <input type="number" formControlName="minPrice" placeholder="0" class="form-input">
+          </div>
+          <div class="filter-field">
+            <label>Max Price ($/night)</label>
+            <input type="number" formControlName="maxPrice" placeholder="999" class="form-input">
+          </div>
+          <div class="filter-field">
+            <label>Min Guests</label>
+            <input type="number" formControlName="maxOccupancy" placeholder="1" class="form-input" min="1">
+          </div>
+          <div class="filter-field">
+            <label>Sort By</label>
+            <select formControlName="sortBy" class="form-input">
+              <option value="Price">Price</option>
+              <option value="Rating">Rating</option>
+              <option value="Name">Name</option>
+            </select>
+          </div>
+        </form>
+        <div class="filters-actions">
+          <button class="btn-ghost" (click)="clearFilters()">
+            <span class="material-icons">clear</span> Clear All
+          </button>
+          <button class="btn-primary" (click)="applyFilters()">
+            <span class="material-icons">check</span> Apply Filters
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Results -->
+    @if (isLoading()) {
+      <div [class]="'rooms-results ' + viewMode() + '-view'">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="room-card skeleton-card">
+            <div class="skeleton" style="height:240px;border-radius:16px 16px 0 0"></div>
+            <div style="padding:20px">
+              <div class="skeleton" style="height:16px;width:50%;margin-bottom:10px"></div>
+              <div class="skeleton" style="height:22px;width:80%;margin-bottom:10px"></div>
+              <div class="skeleton" style="height:14px;width:40%"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (rooms.length === 0) {
+      <div class="empty-state">
+        <span class="material-icons">search_off</span>
+        <h3>No rooms found</h3>
+        <p>Try adjusting your search filters or browse all available rooms.</p>
+        <button class="btn-outline" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    } @else {
+      <div [class]="'rooms-results ' + viewMode() + '-view'">
+        @for (room of rooms; track room.id) {
+          <div class="room-card"
+            [class.featured]="room.isFeatured"
+            [style.transform]="getTiltStyle(room.id)"
+            (mousemove)="onCardMouseMove($event, room.id)"
+            (mouseleave)="onCardMouseLeave(room.id)">
+
+            <!-- Image -->
+            <div class="room-img-wrap">
+              <img [src]="room.thumbnailUrl || 'assets/images/room-placeholder.jpg'"
+                [alt]="room.name" class="room-img" loading="lazy">
+              <div class="room-badges">
+                @if (room.isFeatured) {
+                  <span class="badge badge-gold">✦ Featured</span>
+                }
+                <span class="badge" [class]="getStatusClass(room.status)">{{ room.status }}</span>
+              </div>
+              <div class="price-overlay">
+                <span class="price-amount">${{ room.pricePerNight }}</span>
+                <span class="price-night">/night</span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="room-body">
+              <div class="room-type-tag">{{ room.roomTypeName }}</div>
+              <h3 class="room-name">{{ room.name }}</h3>
+              <p class="room-desc">{{ room.description }}</p>
+
+              <div class="room-rating">
+                <div class="stars">
+                  @for (s of getStars(room.averageRating); track $index) {
+                    <span class="material-icons star-f">star</span>
+                  }
+                </div>
+                <span class="rv">{{ room.averageRating | number:'1.1-1' }}</span>
+                <span class="rc">({{ room.totalReviews }})</span>
+              </div>
+
+              <div class="room-meta">
+                <span><span class="material-icons">group</span>{{ room.maxOccupancy }} guests</span>
+                <span><span class="material-icons">straighten</span>{{ room.sizeInSqFt }} sqft</span>
+                <span><span class="material-icons">layers</span>Floor {{ room.floorNumber }}</span>
+              </div>
+
+              <div class="room-amenities">
+                @for (a of room.amenities.slice(0,3); track a.id) {
+                  <span class="amenity-chip">
+                    <span class="material-icons">{{ a.icon || 'check' }}</span>{{ a.name }}
+                  </span>
+                }
+              </div>
+
+              <div class="room-actions">
+                <a [routerLink]="['/rooms', room.id]" class="btn-room-detail">View Details</a>
+                @if (authService.isAuthenticated()) {
+                  <a [routerLink]="['/booking', room.id]"
+                    [queryParams]="selectedBranch() ? {locationId: selectedBranch()!.id} : {}"
+                    class="btn-room-book"
+                    [class.disabled]="room.status !== 'Available'">
+                    <span class="material-icons">hotel</span> Book Now
+                  </a>
+                } @else {
+                  <a routerLink="/login" class="btn-room-book">
+                    <span class="material-icons">login</span> Sign In to Book
+                  </a>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Pagination -->
+      @if ((result()?.totalPages ?? 1) > 1) {
+        <div class="pagination">
+          <button class="pg-btn" [disabled]="!result()?.hasPreviousPage"
+            (click)="changePage(filter.pageNumber - 1)">
+            <span class="material-icons">chevron_left</span>
+          </button>
+          @for (p of pages; track p) {
+            <button class="pg-btn" [class.pg-active]="p === filter.pageNumber"
+              (click)="changePage(p)">{{ p }}</button>
+          }
+          <button class="pg-btn" [disabled]="!result()?.hasNextPage"
+            (click)="changePage(filter.pageNumber + 1)">
+            <span class="material-icons">chevron_right</span>
+          </button>
+        </div>
+      }
+    }
+  </div>
+</div>

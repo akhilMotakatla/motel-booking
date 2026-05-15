@@ -1,0 +1,93 @@
+<div class="mgmt-page page-enter">
+  <div class="mgmt-header">
+    <div>
+      <h1 class="mgmt-title">Booking <span class="text-gradient">Management</span></h1>
+      <p class="mgmt-sub">{{ result()?.totalCount ?? 0 }} total bookings</p>
+    </div>
+  </div>
+
+  <!-- Status Filter -->
+  <div class="status-filters">
+    @for (s of statuses; track s) {
+      <button class="status-pill" [class.active]="selectedStatus() === s"
+        (click)="filterByStatus(s)">
+        {{ s || 'All' }}
+      </button>
+    }
+  </div>
+
+  @if (isLoading()) {
+    <div class="mgmt-loading"><div class="loading-spinner-lg"></div></div>
+  } @else {
+    <div class="rooms-table-wrap glass">
+      <table class="mgmt-table">
+        <thead>
+          <tr>
+            <th>Confirmation</th>
+            <th>Guest</th>
+            <th>Room</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Nights</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (b of bookings; track b.id) {
+            <tr>
+              <td><code class="room-code">{{ b.confirmationNumber }}</code></td>
+              <td>
+                <div class="guest-cell">
+                  <div class="guest-av">{{ b.userName[0] }}</div>
+                  <div>
+                    <span class="room-cell-name">{{ b.userName }}</span>
+                    <span class="room-cell-desc">{{ b.userEmail }}</span>
+                  </div>
+                </div>
+              </td>
+              <td>{{ b.roomName }}</td>
+              <td>{{ b.checkInDate | date:'MMM d, y' }}</td>
+              <td>{{ b.checkOutDate | date:'MMM d, y' }}</td>
+              <td>{{ b.nightsCount }}</td>
+              <td><strong class="price-cell">${{ b.totalAmount | number:'1.2-2' }}</strong></td>
+              <td><span class="badge" [class]="getStatusClass(b.status)">{{ b.status }}</span></td>
+              <td>
+                <div class="action-btns">
+                  @if (b.status === 'Confirmed') {
+                    <button class="action-btn edit-btn" title="Check In"
+                      (click)="updateStatus(b.id, 'CheckedIn')">
+                      <span class="material-icons">login</span>
+                    </button>
+                  }
+                  @if (b.status === 'CheckedIn') {
+                    <button class="action-btn edit-btn" title="Check Out"
+                      (click)="updateStatus(b.id, 'CheckedOut')">
+                      <span class="material-icons">logout</span>
+                    </button>
+                  }
+                  @if (b.status !== 'Cancelled' && b.status !== 'CheckedOut') {
+                    <button class="action-btn del-btn" title="Cancel"
+                      (click)="cancelBooking(b.id)">
+                      <span class="material-icons">cancel</span>
+                    </button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if ((result()?.totalPages ?? 1) > 1) {
+      <div class="pagination">
+        @for (p of pages; track p) {
+          <button class="pg-btn" [class.pg-active]="p === currentPage()"
+            (click)="changePage(p)">{{ p }}</button>
+        }
+      </div>
+    }
+  }
+</div>

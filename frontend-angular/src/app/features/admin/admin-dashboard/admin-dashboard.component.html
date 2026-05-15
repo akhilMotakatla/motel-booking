@@ -1,0 +1,181 @@
+<div class="dash page-enter">
+  <div class="dash-header">
+    <div>
+      <h1 class="dash-title">Dashboard <span class="text-gradient">Overview</span></h1>
+      <p class="dash-sub">Welcome back, Administrator. Here's what's happening today.</p>
+    </div>
+    <div class="dash-date">
+      <span class="material-icons">calendar_today</span>
+      {{ today | date:'EEEE, MMMM d, y' }}
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="dash-loading">
+      <div class="stats-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="stat-card skeleton" style="height:120px;border-radius:16px"></div>
+        }
+      </div>
+    </div>
+  } @else if (stats()) {
+    <!-- KPI Cards -->
+    <div class="stats-grid">
+      <div class="stat-card glass kpi-rooms">
+        <div class="kpi-icon"><span class="material-icons">king_bed</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">{{ stats()!.totalRooms }}</span>
+          <span class="kpi-label">Total Rooms</span>
+          <div class="kpi-sub">
+            <span class="sub-good">{{ stats()!.availableRooms }} available</span>
+            <span class="sub-warn">{{ stats()!.occupiedRooms }} occupied</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card glass kpi-bookings">
+        <div class="kpi-icon"><span class="material-icons">book_online</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">{{ stats()!.totalBookings }}</span>
+          <span class="kpi-label">Total Bookings</span>
+          <div class="kpi-sub">
+            <span class="sub-warn">{{ stats()!.pendingBookings }} pending</span>
+            <span class="sub-good">{{ stats()!.confirmedBookings }} confirmed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card glass kpi-users">
+        <div class="kpi-icon"><span class="material-icons">people</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">{{ stats()!.totalUsers }}</span>
+          <span class="kpi-label">Registered Users</span>
+          <div class="kpi-sub"><span class="sub-good">Active members</span></div>
+        </div>
+      </div>
+
+      <div class="stat-card glass kpi-revenue">
+        <div class="kpi-icon"><span class="material-icons">payments</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">${{ stats()!.totalRevenue | number:'1.0-0' }}</span>
+          <span class="kpi-label">Total Revenue</span>
+          <div class="kpi-sub">
+            <span class="sub-good">${{ stats()!.monthlyRevenue | number:'1.0-0' }} this month</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card glass kpi-occupancy">
+        <div class="kpi-icon"><span class="material-icons">donut_large</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">{{ stats()!.occupancyRate }}%</span>
+          <span class="kpi-label">Occupancy Rate</span>
+          <div class="occupancy-bar">
+            <div class="occ-fill" [style.width.%]="stats()!.occupancyRate"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card glass kpi-weekly">
+        <div class="kpi-icon"><span class="material-icons">trending_up</span></div>
+        <div class="kpi-body">
+          <span class="kpi-val">${{ stats()!.weeklyRevenue | number:'1.0-0' }}</span>
+          <span class="kpi-label">Weekly Revenue</span>
+          <div class="kpi-sub"><span class="sub-good">This week</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dash-grid-2">
+      <!-- Revenue Chart -->
+      <div class="dash-card glass">
+        <h3 class="card-title">
+          <span class="material-icons">bar_chart</span>
+          6-Month Revenue
+        </h3>
+        <div class="chart-bars">
+          @for (item of stats()!.revenueChart; track item.label) {
+            <div class="bar-col">
+              <span class="bar-val">${{ item.amount | number:'1.0-0' }}</span>
+              <div class="bar-track">
+                <div class="bar-fill" [style.height.%]="getBarWidth(item.amount)"></div>
+              </div>
+              <span class="bar-label">{{ item.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Booking Status -->
+      <div class="dash-card glass">
+        <h3 class="card-title">
+          <span class="material-icons">pie_chart</span>
+          Booking Status Breakdown
+        </h3>
+        <div class="status-list">
+          @for (item of stats()!.bookingStatusChart; track item.status) {
+            @if (item.count > 0) {
+              <div class="status-row">
+                <span class="status-dot" [class]="'dot-' + item.status.toLowerCase()"></span>
+                <span class="status-name">{{ item.status }}</span>
+                <span class="status-count">{{ item.count }}</span>
+                <div class="status-bar-track">
+                  <div class="status-bar-fill"
+                    [class]="'fill-' + item.status.toLowerCase()"
+                    [style.width.%]="(item.count / stats()!.totalBookings) * 100"></div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Bookings -->
+    <div class="dash-card glass recent-bookings">
+      <div class="card-header-row">
+        <h3 class="card-title">
+          <span class="material-icons">history</span>
+          Recent Bookings
+        </h3>
+        <a routerLink="/admin/bookings" class="view-all-link">View all →</a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Confirmation</th>
+              <th>Guest</th>
+              <th>Room</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (b of recentBookings(); track b.id) {
+              <tr>
+                <td><code class="conf-num">{{ b.confirmationNumber }}</code></td>
+                <td>
+                  <div class="guest-cell">
+                    <div class="guest-av">{{ b.userName[0] }}</div>
+                    <div>
+                      <span class="guest-name">{{ b.userName }}</span>
+                      <span class="guest-email">{{ b.userEmail }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="room-num">{{ b.roomName }}</span></td>
+                <td>{{ b.checkInDate | date:'MMM d, y' }}</td>
+                <td>{{ b.checkOutDate | date:'MMM d, y' }}</td>
+                <td><strong class="amount">${{ b.totalAmount | number:'1.2-2' }}</strong></td>
+                <td><span class="badge" [class]="getStatusClass(b.status)">{{ b.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

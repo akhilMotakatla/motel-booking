@@ -1,14 +1,14 @@
-const sqlite3 = require('sqlite3').verbose();
+// db.js
+const sqlite3 = require('sqlite3');
+const { open } = require('sqlite');
 const path = require('path');
 
-const dbPath = path.resolve(__dirname, 'motelbooking.db');
+async function getDB() {
+  const db = await open({
+    filename: path.join(__dirname, 'motel.db'),
+    driver: sqlite3.Database
+  });
+  return db;
+}
 
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('SQLite connection error:', err.message);
-  } else {
-    console.log('Connected to the SQLite database.');
-  }
-});
-
-module.exports = db;
+module.exports = { getDB };

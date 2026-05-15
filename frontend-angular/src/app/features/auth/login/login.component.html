@@ -1,0 +1,124 @@
+<div class="auth-page">
+  <!-- Background -->
+  <div class="auth-bg">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-grid"></div>
+  </div>
+
+  <div class="auth-container">
+    <!-- Brand Side -->
+    <div class="auth-brand">
+      <a routerLink="/" class="brand-logo">
+        <span class="logo-star">✦</span>
+        <div>
+          <span class="logo-main">Starry Nights</span>
+          <span class="logo-sub">MOTEL</span>
+        </div>
+      </a>
+      <h2 class="brand-headline">Welcome Back to Luxury</h2>
+      <p class="brand-desc">Sign in to access your bookings, manage your profile, and experience world-class hospitality.</p>
+      <div class="brand-features">
+        <div class="bf-item"><span class="material-icons">check_circle</span> Manage your bookings</div>
+        <div class="bf-item"><span class="material-icons">check_circle</span> Exclusive member rates</div>
+        <div class="bf-item"><span class="material-icons">check_circle</span> Priority reservations</div>
+        <div class="bf-item"><span class="material-icons">check_circle</span> 24/7 concierge support</div>
+      </div>
+      <div class="brand-testimonial glass">
+        <div class="t-stars">
+          @for (s of [1,2,3,4,5]; track s) {
+            <span class="material-icons">star</span>
+          }
+        </div>
+        <p>"Booking has never been easier. The experience is world-class from start to finish."</p>
+        <span class="t-author">— Elena Voss, Frequent Guest</span>
+      </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="auth-form-side">
+      <div class="auth-card glass-dark">
+        <div class="form-header">
+          <h1>Sign In</h1>
+          <p>Don't have an account? <a routerLink="/register">Create one free</a></p>
+        </div>
+
+        @if (serverError()) {
+          <div class="error-alert">
+            <span class="material-icons">error_outline</span>
+            {{ serverError() }}
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+          <!-- Email -->
+          <div class="field-group">
+            <label class="field-label" for="email">Email Address</label>
+            <div class="field-input-wrap" [class.field-error]="email.invalid && email.touched">
+              <span class="field-icon material-icons">email</span>
+              <input id="email" type="email" formControlName="email"
+                placeholder="your@email.com" autocomplete="email">
+            </div>
+            @if (email.invalid && email.touched) {
+              <span class="field-msg">
+                @if (email.errors?.['required']) { Email is required. }
+                @else if (email.errors?.['email']) { Please enter a valid email address. }
+              </span>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="field-group">
+            <label class="field-label" for="password">Password</label>
+            <div class="field-input-wrap" [class.field-error]="password.invalid && password.touched">
+              <span class="field-icon material-icons">lock</span>
+              <input id="password" [type]="showPassword() ? 'text' : 'password'"
+                formControlName="password" placeholder="••••••••" autocomplete="current-password">
+              <button type="button" class="toggle-pw" (click)="togglePassword()">
+                <span class="material-icons">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
+              </button>
+            </div>
+            @if (password.invalid && password.touched) {
+              <span class="field-msg">
+                @if (password.errors?.['required']) { Password is required. }
+                @else if (password.errors?.['minlength']) { Password must be at least 6 characters. }
+              </span>
+            }
+          </div>
+
+          <div class="form-options">
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <div class="spinner"></div>
+              Signing in...
+            } @else {
+              <span class="material-icons">login</span>
+              Sign In
+            }
+          </button>
+        </form>
+
+        <div class="form-divider"><span>or continue with</span></div>
+
+        <div class="social-auth">
+          <button class="social-auth-btn" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Google
+          </button>
+          <button class="social-auth-btn" disabled>
+            <span class="material-icons" style="color:#0a66c2">business</span>
+            LinkedIn
+          </button>
+        </div>
+
+        <p class="form-footer-note">
+          By signing in, you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

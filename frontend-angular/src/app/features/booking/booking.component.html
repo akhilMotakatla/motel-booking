@@ -1,0 +1,248 @@
+<div class="booking-page page-enter">
+  <div class="bk-bg">
+    <div class="bk-orb bk-orb-1"></div>
+    <div class="bk-orb bk-orb-2"></div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="bk-loading">
+      <div class="loading-spinner-lg"></div>
+      <p>Preparing your booking…</p>
+    </div>
+  } @else if (step() === 3 && confirmedBooking()) {
+    <!-- Step 3: Confirmation -->
+    <div class="container confirmation">
+      <div class="confirm-card glass">
+        <div class="confirm-icon">
+          <span class="material-icons">check_circle</span>
+        </div>
+        <h1 class="confirm-title">Booking Confirmed!</h1>
+        <p class="confirm-sub">
+          A confirmation email has been sent to your registered email address.
+        </p>
+        <div class="confirm-number">
+          <span>Confirmation #</span>
+          <strong>{{ confirmedBooking()!.confirmationNumber }}</strong>
+        </div>
+        <div class="confirm-details">
+          <div class="cd-row">
+            <span class="material-icons">hotel</span>
+            <div><label>Room</label><strong>{{ confirmedBooking()!.roomName }}</strong></div>
+          </div>
+          <div class="cd-row">
+            <span class="material-icons">calendar_today</span>
+            <div>
+              <label>Check-In</label>
+              <strong>{{ confirmedBooking()!.checkInDate | date:'MMMM d, y' }}</strong>
+            </div>
+          </div>
+          <div class="cd-row">
+            <span class="material-icons">calendar_today</span>
+            <div>
+              <label>Check-Out</label>
+              <strong>{{ confirmedBooking()!.checkOutDate | date:'MMMM d, y' }}</strong>
+            </div>
+          </div>
+          <div class="cd-row">
+            <span class="material-icons">nights_stay</span>
+            <div><label>Duration</label><strong>{{ confirmedBooking()!.nightsCount }} night(s)</strong></div>
+          </div>
+          <div class="cd-row total-row">
+            <span class="material-icons">payments</span>
+            <div>
+              <label>Total Amount</label>
+              <strong class="total-val">${{ confirmedBooking()!.totalAmount | number:'1.2-2' }}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="confirm-actions">
+          <a routerLink="/dashboard" class="btn-primary">
+            <span class="material-icons">dashboard</span> View My Bookings
+          </a>
+          <a routerLink="/rooms" class="btn-outline">
+            <span class="material-icons">hotel</span> Browse More Rooms
+          </a>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- Steps 1 & 2 -->
+    <div class="container bk-layout">
+      <!-- Progress -->
+      <div class="bk-progress">
+        <div class="prog-step" [class.active]="step() >= 1" [class.done]="step() > 1">
+          <div class="ps-circle">{{ step() > 1 ? '✓' : '1' }}</div>
+          <span>Select Dates</span>
+        </div>
+        <div class="prog-line" [class.done]="step() > 1"></div>
+        <div class="prog-step" [class.active]="step() >= 2">
+          <div class="ps-circle">2</div>
+          <span>Review & Confirm</span>
+        </div>
+      </div>
+
+      <div class="bk-content">
+        <!-- Left: Form -->
+        <div class="bk-form-side">
+          @if (step() === 1) {
+            <div class="bk-card glass">
+              <h2 class="bk-card-title">
+                <span class="material-icons">calendar_today</span>
+                Select Your Dates
+              </h2>
+              <form [formGroup]="form">
+                <div class="two-col">
+                  <div class="field-group">
+                    <label class="field-label">Check-In Date</label>
+                    <div class="field-input-wrap" [class.field-error]="form.get('checkInDate')?.invalid && form.get('checkInDate')?.touched">
+                      <span class="field-icon material-icons">event</span>
+                      <input type="date" formControlName="checkInDate" [min]="today">
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label">Check-Out Date</label>
+                    <div class="field-input-wrap" [class.field-error]="form.get('checkOutDate')?.invalid && form.get('checkOutDate')?.touched">
+                      <span class="field-icon material-icons">event</span>
+                      <input type="date" formControlName="checkOutDate" [min]="today">
+                    </div>
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Number of Guests</label>
+                  <div class="field-input-wrap">
+                    <span class="field-icon material-icons">group</span>
+                    <input type="number" formControlName="numberOfGuests"
+                      [min]="1" [max]="room()!.maxOccupancy">
+                  </div>
+                  <span class="field-hint">Max {{ room()!.maxOccupancy }} guests for this room</span>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Special Requests (optional)</label>
+                  <div class="field-input-wrap textarea-wrap">
+                    <textarea formControlName="specialRequests" rows="3"
+                      placeholder="Early check-in, dietary requirements, bed preferences…"></textarea>
+                  </div>
+                </div>
+                <button type="button" class="btn-primary bk-next" (click)="nextStep()"
+                  [disabled]="nightsCount() === 0">
+                  <span class="material-icons">arrow_forward</span>
+                  Continue to Review
+                </button>
+              </form>
+            </div>
+          }
+
+          @if (step() === 2) {
+            <div class="bk-card glass">
+              <h2 class="bk-card-title">
+                <span class="material-icons">fact_check</span>
+                Review Your Booking
+              </h2>
+              <div class="review-rows">
+                <div class="review-row">
+                  <span>Room</span>
+                  <strong>{{ room()!.name }}</strong>
+                </div>
+                @if (selectedBranch()) {
+                  <div class="review-row">
+                    <span>Branch</span>
+                    <strong>{{ selectedBranch()!.branchName }}</strong>
+                  </div>
+                  <div class="review-row">
+                    <span>Address</span>
+                    <strong>{{ selectedBranch()!.address }}</strong>
+                  </div>
+                }
+                <div class="review-row">
+                  <span>Check-In</span>
+                  <strong>{{ form.value.checkInDate | date:'MMM d, y' }}</strong>
+                </div>
+                <div class="review-row">
+                  <span>Check-Out</span>
+                  <strong>{{ form.value.checkOutDate | date:'MMM d, y' }}</strong>
+                </div>
+                <div class="review-row">
+                  <span>Duration</span>
+                  <strong>{{ nightsCount() }} night(s)</strong>
+                </div>
+                <div class="review-row">
+                  <span>Guests</span>
+                  <strong>{{ form.value.numberOfGuests }}</strong>
+                </div>
+                @if (form.value.specialRequests) {
+                  <div class="review-row">
+                    <span>Requests</span>
+                    <strong>{{ form.value.specialRequests }}</strong>
+                  </div>
+                }
+              </div>
+              <div class="bk-price-breakdown">
+                <div class="pbr"><span>${{ room()!.pricePerNight }}/night × {{ nightsCount() }} nights</span><span>${{ subtotal() | number:'1.2-2' }}</span></div>
+                <div class="pbr"><span>Taxes & Fees (12%)</span><span>${{ tax() | number:'1.2-2' }}</span></div>
+                <div class="pbr pbr-total"><span>Total</span><strong>${{ total() | number:'1.2-2' }}</strong></div>
+              </div>
+              <div class="bk-policy glass-gold">
+                <span class="material-icons">info_outline</span>
+                <p>Free cancellation available up to 24 hours before check-in. Payment will be collected at the property.</p>
+              </div>
+              <div class="bk-form-actions">
+                <button class="btn-ghost" (click)="step.set(1)">
+                  <span class="material-icons">arrow_back</span> Go Back
+                </button>
+                <button class="btn-primary" (click)="submitBooking()" [disabled]="isSubmitting()">
+                  @if (isSubmitting()) {
+                    <div class="spinner-sm"></div> Confirming…
+                  } @else {
+                    <span class="material-icons">check</span> Confirm Booking
+                  }
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Right: Room Summary -->
+        <div class="bk-summary glass">
+          <img [src]="room()!.thumbnailUrl || 'assets/images/room-placeholder.jpg'"
+            [alt]="room()!.name" class="bk-room-img">
+          <div class="bk-room-info">
+            <span class="bk-room-type">{{ room()!.roomTypeName }}</span>
+            <h3 class="bk-room-name">{{ room()!.name }}</h3>
+            <div class="bk-room-meta">
+              <span><span class="material-icons">group</span>{{ room()!.maxOccupancy }} guests</span>
+              <span><span class="material-icons">straighten</span>{{ room()!.sizeInSqFt }} sqft</span>
+            </div>
+            @if (selectedBranch()) {
+              <div class="bk-branch-info">
+                <div class="bk-branch-row">
+                  <span class="material-icons">storefront</span>
+                  <div>
+                    <span class="bk-branch-name">{{ selectedBranch()!.branchName }}</span>
+                    <span class="bk-branch-addr">{{ selectedBranch()!.address }}</span>
+                  </div>
+                </div>
+                @if (selectedBranch()!.phoneNumber) {
+                  <div class="bk-branch-row">
+                    <span class="material-icons">phone</span>
+                    <span>{{ selectedBranch()!.phoneNumber }}</span>
+                  </div>
+                }
+              </div>
+            }
+            <div class="bk-room-price">
+              <span class="price-val">${{ room()!.pricePerNight }}</span>
+              <span class="price-per">/night</span>
+            </div>
+            @if (nightsCount() > 0) {
+              <div class="bk-total-preview">
+                <div class="btp-row"><span>{{ nightsCount() }} night(s)</span><span>${{ subtotal() | number:'1.2-2' }}</span></div>
+                <div class="btp-row"><span>Tax</span><span>${{ tax() | number:'1.2-2' }}</span></div>
+                <div class="btp-row btp-total"><span>Est. Total</span><strong>${{ total() | number:'1.2-2' }}</strong></div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

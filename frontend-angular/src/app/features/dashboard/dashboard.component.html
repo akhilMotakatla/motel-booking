@@ -1,0 +1,265 @@
+<div class="dash-page page-enter">
+  <div class="dash-bg">
+    <div class="dash-orb"></div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="dash-loading">
+      <div class="loading-spinner-lg"></div>
+      <p>Loading your dashboard…</p>
+    </div>
+  } @else {
+    <!-- Hero Banner -->
+    <div class="dash-hero glass">
+      <div class="hero-left">
+        <div class="user-avatar-lg">{{ user()?.fullName?.[0] ?? '?' }}</div>
+        <div class="user-info">
+          <h1 class="welcome-title">
+            Welcome back, <span class="text-gradient">{{ user()?.fullName?.split(' ')?.[0] ?? 'Guest' }}!</span>
+          </h1>
+          <p class="welcome-sub">{{ user()?.email }}</p>
+          <span class="role-badge badge badge-gold">{{ user()?.role }}</span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hs-item">
+          <span class="hs-val">{{ bookings().length }}</span>
+          <span class="hs-label">Total Bookings</span>
+        </div>
+        <div class="hs-divider"></div>
+        <div class="hs-item">
+          <span class="hs-val">{{ upcomingBookings.length }}</span>
+          <span class="hs-label">Upcoming</span>
+        </div>
+        <div class="hs-divider"></div>
+        <div class="hs-item">
+          <span class="hs-val">${{ totalSpent | number:'1.0-0' }}</span>
+          <span class="hs-label">Total Spent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="dash-tabs">
+      <button class="dash-tab" [class.active]="activeTab() === 'bookings'"
+        (click)="activeTab.set('bookings')">
+        <span class="material-icons">hotel</span> My Bookings
+      </button>
+      <button class="dash-tab" [class.active]="activeTab() === 'profile'"
+        (click)="activeTab.set('profile')">
+        <span class="material-icons">person</span> My Profile
+      </button>
+    </div>
+
+    <!-- Bookings Tab -->
+    @if (activeTab() === 'bookings') {
+      <div class="tab-content">
+        @if (upcomingBookings.length > 0) {
+          <h2 class="section-heading">
+            <span class="material-icons">upcoming</span> Upcoming Stays
+          </h2>
+          <div class="bookings-grid">
+            @for (b of upcomingBookings; track b.id) {
+              <div class="booking-card glass">
+                <div class="bc-img">
+                  @if (b.roomThumbnail) {
+                    <img [src]="b.roomThumbnail" [alt]="b.roomName">
+                  } @else {
+                    <div class="bc-img-placeholder">
+                      <span class="material-icons">king_bed</span>
+                    </div>
+                  }
+                  <span class="badge bc-status" [class]="getStatusClass(b.status)">{{ b.status }}</span>
+                </div>
+                <div class="bc-body">
+                  <div class="bc-conf">
+                    <code>{{ b.confirmationNumber }}</code>
+                  </div>
+                  <h3 class="bc-room">{{ b.roomName }}</h3>
+                  <div class="bc-dates">
+                    <div class="bc-date">
+                      <span class="material-icons">flight_land</span>
+                      <div>
+                        <label>Check-In</label>
+                        <strong>{{ b.checkInDate | date:'EEE, MMM d, y' }}</strong>
+                      </div>
+                    </div>
+                    <div class="bc-nights">{{ b.nightsCount }}N</div>
+                    <div class="bc-date">
+                      <span class="material-icons">flight_takeoff</span>
+                      <div>
+                        <label>Check-Out</label>
+                        <strong>{{ b.checkOutDate | date:'EEE, MMM d, y' }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bc-footer">
+                    <div class="bc-amount">
+                      <span>Total</span>
+                      <strong>${{ b.totalAmount | number:'1.2-2' }}</strong>
+                    </div>
+                    @if (b.status === 'Confirmed' || b.status === 'Pending') {
+                      <button class="bc-cancel" (click)="cancelBooking(b.id)">
+                        <span class="material-icons">cancel</span> Cancel
+                      </button>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+
+        @if (pastBookings.length > 0) {
+          <h2 class="section-heading" style="margin-top:40px">
+            <span class="material-icons">history</span> Past Stays
+          </h2>
+          <div class="past-table glass">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Room</th>
+                  <th>Check-In</th>
+                  <th>Nights</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (b of pastBookings; track b.id) {
+                  <tr>
+                    <td>
+                      <div>
+                        <span style="font-weight:600;color:#f8f8f8">{{ b.roomName }}</span>
+                        <br>
+                        <code style="font-size:0.72rem;color:rgba(248,248,248,0.35)">{{ b.confirmationNumber }}</code>
+                      </div>
+                    </td>
+                    <td>{{ b.checkInDate | date:'MMM d, y' }}</td>
+                    <td>{{ b.nightsCount }}</td>
+                    <td><strong style="color:#f5c842">${{ b.totalAmount | number:'1.2-2' }}</strong></td>
+                    <td><span class="badge" [class]="getStatusClass(b.status)">{{ b.status }}</span></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+
+        @if (bookings().length === 0) {
+          <div class="empty-bookings">
+            <span class="material-icons">hotel</span>
+            <h3>No bookings yet</h3>
+            <p>Your stay history will appear here once you make your first booking.</p>
+            <a routerLink="/rooms" class="btn-primary">
+              <span class="material-icons">search</span> Explore Rooms
+            </a>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Profile Tab -->
+    @if (activeTab() === 'profile') {
+      <div class="tab-content">
+        <div class="profile-card glass">
+          <div class="profile-header">
+            <h2 class="section-heading" style="margin-bottom:0">
+              <span class="material-icons">manage_accounts</span> Personal Information
+            </h2>
+            @if (!isEditingProfile()) {
+              <button class="btn-ghost" (click)="isEditingProfile.set(true)">
+                <span class="material-icons">edit</span> Edit Profile
+              </button>
+            }
+          </div>
+
+          @if (!isEditingProfile()) {
+            <div class="profile-fields">
+              <div class="pf-row">
+                <label>Full Name</label><span>{{ user()?.fullName }}</span>
+              </div>
+              <div class="pf-row">
+                <label>Email</label><span>{{ user()?.email }}</span>
+              </div>
+              <div class="pf-row">
+                <label>Phone</label><span>{{ user()?.phoneNumber || '—' }}</span>
+              </div>
+              <div class="pf-row">
+                <label>Address</label><span>{{ user()?.address || '—' }}</span>
+              </div>
+              <div class="pf-row">
+                <label>City</label><span>{{ user()?.city || '—' }}</span>
+              </div>
+              <div class="pf-row">
+                <label>State</label><span>{{ user()?.state || '—' }}</span>
+              </div>
+              <div class="pf-row">
+                <label>Zip Code</label><span>{{ user()?.zipCode || '—' }}</span>
+              </div>
+              <div class="pf-row">
+                <label>Member Since</label>
+                <span>{{ user()?.createdAt | date:'MMMM d, y' }}</span>
+              </div>
+            </div>
+          } @else {
+            <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-edit-form">
+              <div class="two-col">
+                <div class="field-group">
+                  <label class="field-label">Full Name *</label>
+                  <div class="field-input-wrap">
+                    <input type="text" formControlName="fullName">
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Phone Number</label>
+                  <div class="field-input-wrap">
+                    <input type="tel" formControlName="phoneNumber">
+                  </div>
+                </div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Address</label>
+                <div class="field-input-wrap">
+                  <input type="text" formControlName="address" placeholder="Street address">
+                </div>
+              </div>
+              <div class="three-col">
+                <div class="field-group">
+                  <label class="field-label">City</label>
+                  <div class="field-input-wrap">
+                    <input type="text" formControlName="city">
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">State</label>
+                  <div class="field-input-wrap">
+                    <input type="text" formControlName="state">
+                  </div>
+                </div>
+                <div class="field-group">
+                  <label class="field-label">Zip Code</label>
+                  <div class="field-input-wrap">
+                    <input type="text" formControlName="zipCode">
+                  </div>
+                </div>
+              </div>
+              <div class="profile-edit-actions">
+                <button type="button" class="btn-ghost" (click)="isEditingProfile.set(false)">
+                  Cancel
+                </button>
+                <button type="submit" class="btn-primary" [disabled]="isSavingProfile()">
+                  @if (isSavingProfile()) {
+                    <div class="spinner-sm"></div> Saving…
+                  } @else {
+                    <span class="material-icons">save</span> Save Changes
+                  }
+                </button>
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    }
+  }
+</div>

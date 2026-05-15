@@ -2,22 +2,41 @@ const db = require('../database/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = 'your_jwt_secret_key'; // replace with .env in real apps
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
+// Helper to generate JWT
+function generateToken(id, role) {
+  return jwt.sign({ id, role }, JWT_SECRET, { expiresIn: '1d' });
+}
 
 // Register User
 exports.registerUser = (req, res) => {
   const { fullName, email, password, address, city, state, zipCode, contact } = req.body;
 
-  const hashedPassword = bcrypt.hashSync(password, 10);
+  if (!email || !password || !fullName) {
+    return res.status(400).json({ message: 'Full name, email and password are required.' });
+  }
 
-  const sql = `INSERT INTO Users (FullName, Email, PasswordHash, Address, City, State, ZipCode, Contact)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  // Hash password
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) return res.status(500).json({ message: 'Error hashing password.' });
 
-  db.run(sql, [fullName, email, hashedPassword, address, city, state, zipCode, contact], function (err) {
-    if (err) {
-      return res.status(500).json({ error: 'User registration failed', details: err.message });
-    }
-    res.status(201).json({ message: 'User registered successfully', userId: this.lastID });
+    // Insert into users table
+    const query = `INSERT INTO users 
+      (fullName, email, password, address, city, state, zipCode, contact) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    db.run(query, [fullName, email, hashedPassword, address, city, state, zipCode, contact], function(err) {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          return res.status(400).json({ message: 'Email already registered.' });
+        }
+        return res.status(500).json({ message: 'Database error.' });
+      }
+
+      const token = generateToken(this.lastID, 'user');
+      res.status(201).json({ token, userId: this.lastID });
+    });
   });
 };
 
@@ -25,34 +44,43 @@ exports.registerUser = (req, res) => {
 exports.loginUser = (req, res) => {
   const { email, password } = req.body;
 
-  const sql = `SELECT * FROM Users WHERE Email = ?`;
+  db.get('SELECT * FROM users WHERE email = ?', [email], (err, user) => {
+    if (err) return res.status(500).json({ message: 'Database error.' });
+    if (!user) return res.status(400).json({ message: 'Invalid email or password.' });
 
-  db.get(sql, [email], (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (!row) return res.status(404).json({ message: 'User not found' });
+    bcrypt.compare(password, user.password, (err, isMatch) => {
+      if (err) return res.status(500).json({ message: 'Error comparing passwords.' });
+      if (!isMatch) return res.status(400).json({ message: 'Invalid email or password.' });
 
-    const isPasswordValid = bcrypt.compareSync(password, row.PasswordHash);
-    if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const token = jwt.sign({ userId: row.UserID, email: row.Email }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Login successful', token });
+      const token = generateToken(user.id, 'user');
+      res.json({ token, userId: user.id });
+    });
   });
 };
 
 // Register Admin
 exports.registerAdmin = (req, res) => {
-  const { fullName, email, password } = req.body;
+  const { email, password } = req.body;
 
-  const hashedPassword = bcrypt.hashSync(password, 10);
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
 
-  const sql = `INSERT INTO Admins (FullName, Email, PasswordHash)
-               VALUES (?, ?, ?)`;
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) return res.status(500).json({ message: 'Error hashing password.' });
 
-  db.run(sql, [fullName, email, hashedPassword], function (err) {
-    if (err) {
-      return res.status(500).json({ error: 'Admin registration failed', details: err.message });
-    }
-    res.status(201).json({ message: 'Admin registered successfully', adminId: this.lastID });
+    const query = `INSERT INTO admins (email, password) VALUES (?, ?)`;
+    db.run(query, [email, hashedPassword], function(err) {
+      if (err) {
+        if (err.message.includes('UNIQUE constraint failed')) {
+          return res.status(400).json({ message: 'Email already registered.' });
+        }
+        return res.status(500).json({ message: 'Database error.' });
+      }
+
+      const token = generateToken(this.lastID, 'admin');
+      res.status(201).json({ token, adminId: this.lastID });
+    });
   });
 };
 
@@ -60,16 +88,16 @@ exports.registerAdmin = (req, res) => {
 exports.loginAdmin = (req, res) => {
   const { email, password } = req.body;
 
-  const sql = `SELECT * FROM Admins WHERE Email = ?`;
+  db.get('SELECT * FROM admins WHERE email = ?', [email], (err, admin) => {
+    if (err) return res.status(500).json({ message: 'Database error.' });
+    if (!admin) return res.status(400).json({ message: 'Invalid email or password.' });
 
-  db.get(sql, [email], (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (!row) return res.status(404).json({ message: 'Admin not found' });
+    bcrypt.compare(password, admin.password, (err, isMatch) => {
+      if (err) return res.status(500).json({ message: 'Error comparing passwords.' });
+      if (!isMatch) return res.status(400).json({ message: 'Invalid email or password.' });
 
-    const isPasswordValid = bcrypt.compareSync(password, row.PasswordHash);
-    if (!isPasswordValid) return res.status(401).json({ message: 'Invalid credentials' });
-
-    const token = jwt.sign({ adminId: row.AdminID, email: row.Email }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Login successful', token });
+      const token = generateToken(admin.id, 'admin');
+      res.json({ token, adminId: admin.id });
+    });
   });
 };

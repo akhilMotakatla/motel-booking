@@ -1,0 +1,44 @@
+.status-filters {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+}
+
+.status-pill {
+  padding: 7px 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px;
+  color: rgba(248,248,248,0.55);
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: all 180ms ease;
+
+  &.active, &:hover {
+    background: rgba(212,175,55,0.12);
+    border-color: rgba(212,175,55,0.35);
+    color: #d4af37;
+  }
+}
+
+.pagination {
+  display: flex; gap: 8px; margin-top: 24px; justify-content: center; flex-wrap: wrap;
+}
+
+.pg-btn {
+  min-width: 36px; height: 36px; padding: 0 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; color: rgba(248,248,248,0.55);
+  font-size: 0.875rem; font-weight: 600;
+  cursor: pointer; transition: all 180ms ease;
+
+  &.pg-active {
+    background: linear-gradient(135deg, #f5c842, #d4af37);
+    border-color: transparent; color: #0a0a0f; font-weight: 800;
+  }
+
+  &:hover:not(.pg-active) {
+    background: rgba(212,175,55,0.1);
+    border-color: rgba(212,175,55,0.3);
+    color: #d4af37;
+  }
+}

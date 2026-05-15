@@ -1,0 +1,201 @@
+.footer {
+  position: relative;
+  background: #080810;
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.footer-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  box-shadow: 0 0 60px 20px rgba(212, 175, 55, 0.08);
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 60px;
+
+  @media (max-width: 1024px) { grid-template-columns: 1fr 1fr; gap: 40px; }
+  @media (max-width: 640px) { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Brand ────────────────────────────────────── */
+.footer-brand {
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+
+    .logo-star {
+      font-size: 1.6rem;
+      color: #d4af37;
+    }
+
+    .logo-main {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f5c842, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-sub {
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      color: rgba(212, 175, 55, 0.5);
+      text-transform: uppercase;
+    }
+  }
+}
+
+.brand-desc {
+  color: rgba(248, 248, 248, 0.5);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  max-width: 300px;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(248, 248, 248, 0.5);
+  text-decoration: none;
+  transition: all 200ms ease;
+
+  .material-icons { font-size: 1.1rem; }
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: #d4af37;
+    transform: translateY(-2px);
+  }
+}
+
+/* ── Sections ─────────────────────────────────── */
+.footer-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  a {
+    color: rgba(248, 248, 248, 0.5);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 200ms ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+      content: '›';
+      color: #d4af37;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all 200ms ease;
+    }
+
+    &:hover {
+      color: rgba(248, 248, 248, 0.9);
+      padding-left: 6px;
+      &::before { opacity: 1; transform: translateX(0); }
+    }
+  }
+}
+
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: rgba(248, 248, 248, 0.5);
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  .material-icons {
+    font-size: 1rem;
+    color: #d4af37;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+}
+
+/* ── Bottom ───────────────────────────────────── */
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  margin: 40px 0 24px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  color: rgba(248, 248, 248, 0.35);
+  font-size: 0.825rem;
+}
+
+.footer-legal {
+  display: flex;
+  gap: 20px;
+
+  a {
+    color: rgba(248, 248, 248, 0.35);
+    text-decoration: none;
+    font-size: 0.825rem;
+    transition: color 150ms ease;
+    &:hover { color: #d4af37; }
+  }
+}

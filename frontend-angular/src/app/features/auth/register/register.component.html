@@ -1,0 +1,137 @@
+<div class="auth-page">
+  <div class="auth-bg">
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+    <div class="auth-grid"></div>
+  </div>
+
+  <div class="auth-container register-layout">
+    <div class="auth-form-side" style="max-width:560px;margin:0 auto;width:100%">
+      <div class="auth-card glass-dark">
+        <div class="form-header">
+          <a routerLink="/" class="brand-logo-sm">
+            <span>✦</span> Starry Nights Motel
+          </a>
+          <h1>Create Account</h1>
+          <p>Already have one? <a routerLink="/login">Sign in here</a></p>
+        </div>
+
+        @if (serverError()) {
+          <div class="error-alert">
+            <span class="material-icons">error_outline</span>
+            {{ serverError() }}
+          </div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+          <div class="two-col">
+            <!-- Full Name -->
+            <div class="field-group">
+              <label class="field-label">Full Name</label>
+              <div class="field-input-wrap" [class.field-error]="f.fullName.invalid && f.fullName.touched">
+                <span class="field-icon material-icons">person</span>
+                <input type="text" formControlName="fullName" placeholder="John Smith" autocomplete="name">
+              </div>
+              @if (f.fullName.invalid && f.fullName.touched) {
+                <span class="field-msg">
+                  @if (f.fullName.errors?.['required']) { Full name is required. }
+                  @else if (f.fullName.errors?.['minlength']) { At least 2 characters. }
+                </span>
+              }
+            </div>
+
+            <!-- Phone -->
+            <div class="field-group">
+              <label class="field-label">Phone (optional)</label>
+              <div class="field-input-wrap" [class.field-error]="f.phoneNumber.invalid && f.phoneNumber.touched">
+                <span class="field-icon material-icons">phone</span>
+                <input type="tel" formControlName="phoneNumber" placeholder="+1 (555) 000-0000" autocomplete="tel">
+              </div>
+              @if (f.phoneNumber.invalid && f.phoneNumber.touched) {
+                <span class="field-msg">Enter a valid phone number.</span>
+              }
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="field-group">
+            <label class="field-label">Email Address</label>
+            <div class="field-input-wrap" [class.field-error]="f.email.invalid && f.email.touched">
+              <span class="field-icon material-icons">email</span>
+              <input type="email" formControlName="email" placeholder="your@email.com" autocomplete="email">
+            </div>
+            @if (f.email.invalid && f.email.touched) {
+              <span class="field-msg">
+                @if (f.email.errors?.['required']) { Email is required. }
+                @else { Please enter a valid email. }
+              </span>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="field-group">
+            <label class="field-label">Password</label>
+            <div class="field-input-wrap" [class.field-error]="f.password.invalid && f.password.touched">
+              <span class="field-icon material-icons">lock</span>
+              <input [type]="showPassword() ? 'text' : 'password'" formControlName="password"
+                placeholder="Min 8 chars, uppercase & number" autocomplete="new-password">
+              <button type="button" class="toggle-pw" (click)="showPassword.set(!showPassword())">
+                <span class="material-icons">{{ showPassword() ? 'visibility_off' : 'visibility' }}</span>
+              </button>
+            </div>
+            @if (f.password.value) {
+              <div class="pw-strength">
+                <div class="pw-bar">
+                  <div class="pw-fill"
+                    [style.width.%]="getPasswordStrength().pct"
+                    [style.background]="getPasswordStrength().color"></div>
+                </div>
+                <span class="pw-label" [style.color]="getPasswordStrength().color">
+                  {{ getPasswordStrength().label }}
+                </span>
+              </div>
+            }
+            @if (f.password.invalid && f.password.touched) {
+              <span class="field-msg">
+                @if (f.password.errors?.['required']) { Password is required. }
+                @else if (f.password.errors?.['minlength']) { At least 8 characters. }
+                @else { Must include uppercase, lowercase, and a number. }
+              </span>
+            }
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="field-group">
+            <label class="field-label">Confirm Password</label>
+            <div class="field-input-wrap"
+              [class.field-error]="(f.confirmPassword.invalid && f.confirmPassword.touched) || (form.errors?.['passwordMismatch'] && f.confirmPassword.touched)">
+              <span class="field-icon material-icons">lock_outline</span>
+              <input [type]="showConfirm() ? 'text' : 'password'" formControlName="confirmPassword"
+                placeholder="Repeat your password" autocomplete="new-password">
+              <button type="button" class="toggle-pw" (click)="showConfirm.set(!showConfirm())">
+                <span class="material-icons">{{ showConfirm() ? 'visibility_off' : 'visibility' }}</span>
+              </button>
+            </div>
+            @if (form.errors?.['passwordMismatch'] && f.confirmPassword.touched) {
+              <span class="field-msg">Passwords do not match.</span>
+            }
+          </div>
+
+          <button type="submit" class="btn-submit" [disabled]="isLoading()">
+            @if (isLoading()) {
+              <div class="spinner"></div> Creating Account...
+            } @else {
+              <span class="material-icons">person_add</span> Create My Account
+            }
+          </button>
+        </form>
+
+        <p class="form-footer-note">
+          By creating an account, you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          We'll send occasional updates — unsubscribe anytime.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

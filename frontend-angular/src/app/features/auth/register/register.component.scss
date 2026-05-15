@@ -1,0 +1,47 @@
+.register-layout { max-width: 1000px; }
+
+.brand-logo-sm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #d4af37;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  span { font-size: 1.2rem; }
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  @media (max-width: 520px) { grid-template-columns: 1fr; }
+}
+
+.pw-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.pw-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.pw-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: all 400ms ease;
+}
+
+.pw-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}

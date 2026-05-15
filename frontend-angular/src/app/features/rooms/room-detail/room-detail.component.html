@@ -1,0 +1,204 @@
+<div class="detail-page page-enter">
+  @if (isLoading()) {
+    <div class="detail-loading">
+      <div class="loading-spinner-lg"></div>
+      <p>Loading room details…</p>
+    </div>
+  } @else if (!room()) {
+    <div class="detail-error">
+      <span class="material-icons">error_outline</span>
+      <h2>Room Not Found</h2>
+      <a routerLink="/rooms" class="btn-outline">← Back to Rooms</a>
+    </div>
+  } @else {
+    <!-- Hero Gallery -->
+    <div class="gallery-hero">
+      <div class="gallery-main">
+        <img [src]="currentImage" [alt]="room()!.name" class="gallery-main-img">
+        @if ((room()!.imageUrls?.length ?? 0) > 1) {
+          <button class="gallery-nav gnav-prev" (click)="prevImage()">
+            <span class="material-icons">chevron_left</span>
+          </button>
+          <button class="gallery-nav gnav-next" (click)="nextImage()">
+            <span class="material-icons">chevron_right</span>
+          </button>
+        }
+        <!-- Badges -->
+        <div class="gallery-badges">
+          @if (room()!.isFeatured) { <span class="badge badge-gold">✦ Featured</span> }
+          <span class="badge" [class]="getStatusClass(room()!.status)">{{ room()!.status }}</span>
+        </div>
+      </div>
+      <!-- Thumbnails -->
+      @if ((room()!.imageUrls?.length ?? 0) > 1) {
+        <div class="gallery-thumbs">
+          @for (img of room()!.imageUrls; track $index) {
+            <div class="thumb" [class.active]="activeImage() === $index" (click)="setImage($index)">
+              <img [src]="img" [alt]="'Room image ' + ($index+1)" loading="lazy">
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Content -->
+    <div class="container detail-content">
+      <div class="detail-layout">
+        <!-- Left: Info -->
+        <div class="detail-main">
+          <div class="breadcrumb">
+            <a routerLink="/">Home</a>
+            <span class="material-icons">chevron_right</span>
+            <a routerLink="/rooms">Rooms</a>
+            <span class="material-icons">chevron_right</span>
+            <span>{{ room()!.name }}</span>
+          </div>
+
+          <div class="room-type-tag">{{ room()!.roomTypeName }}</div>
+          <h1 class="detail-title">{{ room()!.name }}</h1>
+
+          <div class="detail-meta">
+            <div class="meta-rating">
+              <div class="stars">
+                @for (s of getStars(room()!.averageRating); track $index) {
+                  <span class="material-icons star-f">star</span>
+                }
+                @for (s of getEmptyStars(room()!.averageRating); track $index) {
+                  <span class="material-icons star-e">star_border</span>
+                }
+              </div>
+              <span class="rv">{{ room()!.averageRating | number:'1.1-1' }}</span>
+              <span class="rc">({{ room()!.totalReviews }} reviews)</span>
+            </div>
+            <div class="meta-quick">
+              <span><span class="material-icons">group</span> Up to {{ room()!.maxOccupancy }} guests</span>
+              <span><span class="material-icons">straighten</span> {{ room()!.sizeInSqFt }} sq ft</span>
+              <span><span class="material-icons">layers</span> Floor {{ room()!.floorNumber }}</span>
+              <span><span class="material-icons">tag</span> Room {{ room()!.roomNumber }}</span>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="detail-tabs">
+            <button class="tab-btn" [class.active]="activeTab()==='overview'" (click)="activeTab.set('overview')">Overview</button>
+            <button class="tab-btn" [class.active]="activeTab()==='amenities'" (click)="activeTab.set('amenities')">Amenities</button>
+            <button class="tab-btn" [class.active]="activeTab()==='reviews'" (click)="activeTab.set('reviews')">Reviews</button>
+          </div>
+
+          <!-- Tab Content -->
+          @if (activeTab() === 'overview') {
+            <div class="tab-panel">
+              <h3 class="tab-section-title">About This Room</h3>
+              <p class="detail-desc">{{ room()!.description }}</p>
+              <div class="detail-divider"></div>
+              <h3 class="tab-section-title">Room Highlights</h3>
+              <div class="highlights-grid">
+                <div class="highlight-item">
+                  <span class="material-icons">king_bed</span>
+                  <div><strong>Room Type</strong><span>{{ room()!.roomTypeName }}</span></div>
+                </div>
+                <div class="highlight-item">
+                  <span class="material-icons">group</span>
+                  <div><strong>Max Guests</strong><span>{{ room()!.maxOccupancy }} people</span></div>
+                </div>
+                <div class="highlight-item">
+                  <span class="material-icons">straighten</span>
+                  <div><strong>Room Size</strong><span>{{ room()!.sizeInSqFt }} sq ft</span></div>
+                </div>
+                <div class="highlight-item">
+                  <span class="material-icons">layers</span>
+                  <div><strong>Floor</strong><span>Floor {{ room()!.floorNumber }}</span></div>
+                </div>
+              </div>
+            </div>
+          }
+
+          @if (activeTab() === 'amenities') {
+            <div class="tab-panel">
+              @for (group of amenityGroups; track group.category) {
+                <h3 class="tab-section-title">{{ group.category }}</h3>
+                <div class="amenities-list">
+                  @for (a of group.items; track a.id) {
+                    <div class="amenity-row">
+                      <span class="material-icons">{{ a.icon || 'check_circle' }}</span>
+                      <span>{{ a.name }}</span>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          }
+
+          @if (activeTab() === 'reviews') {
+            <div class="tab-panel">
+              <div class="reviews-placeholder">
+                <span class="material-icons">rate_review</span>
+                <h4>Guest Reviews</h4>
+                <p>{{ room()!.totalReviews }} verified guest reviews — averaging {{ room()!.averageRating | number:'1.1-1' }}/5.0 stars.</p>
+                <p class="reviews-note">Full review integration available with booking system.</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Right: Booking Panel -->
+        <div class="booking-panel glass">
+          <div class="bp-price">
+            <span class="bp-amount">${{ room()!.pricePerNight }}</span>
+            <span class="bp-night">/ night</span>
+          </div>
+
+          <div class="bp-status" [class]="getStatusClass(room()!.status)">
+            <span class="material-icons">{{ room()!.status === 'Available' ? 'check_circle' : 'cancel' }}</span>
+            {{ room()!.status }}
+          </div>
+
+          @if (room()!.status === 'Available') {
+            @if (authService.isAuthenticated()) {
+              <a [routerLink]="['/booking', room()!.id]" class="btn-primary bp-cta">
+                <span class="material-icons">hotel</span>
+                Reserve This Room
+              </a>
+            } @else {
+              <a routerLink="/login" class="btn-primary bp-cta">
+                <span class="material-icons">login</span>
+                Sign In to Book
+              </a>
+            }
+          } @else {
+            <button class="bp-unavailable" disabled>
+              <span class="material-icons">block</span>
+              Currently Unavailable
+            </button>
+          }
+
+          <div class="bp-info">
+            <div class="bp-info-item">
+              <span class="material-icons">cancel</span>
+              <span>Free cancellation up to 24h before check-in</span>
+            </div>
+            <div class="bp-info-item">
+              <span class="material-icons">verified</span>
+              <span>Best rate guaranteed when booking direct</span>
+            </div>
+            <div class="bp-info-item">
+              <span class="material-icons">support_agent</span>
+              <span>24/7 concierge support included</span>
+            </div>
+          </div>
+
+          <div class="bp-divider"></div>
+
+          <div class="bp-share">
+            <h4>Share This Room</h4>
+            <div class="share-btns">
+              <button class="share-btn"><span class="material-icons">share</span></button>
+              <button class="share-btn"><span class="material-icons">favorite_border</span></button>
+              <button class="share-btn"><span class="material-icons">bookmark_border</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
